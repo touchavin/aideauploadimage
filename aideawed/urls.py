@@ -18,6 +18,7 @@ from django.urls import path
 from uploadimage.views import login
 from uploadimage.views import bad
 from uploadimage.views import good
+from uploadimage.views import home
 
 
 
@@ -29,6 +30,7 @@ urlpatterns = [
     path('login', login),
     path('bad', bad),
     path('good', good),
+    path('home', home),
   
   
     
