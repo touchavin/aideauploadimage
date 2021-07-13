@@ -192,13 +192,300 @@ def good(request): #หน้า good
         return render(request,'home.html', context=context)
     return render(request, 'good.html')
 
-def bad(request): #หน้า good.html
-  
+def bad(request): #หน้า bad
+    if request.method == 'POST':
+        print(request.POST)
+        # Customer_number = request.POST['Customer_number']
+        Circuit = request.POST['subject']
+        Accessory = request.POST['topic']
+        Case = request.POST['chapter']
+        f_image = request.FILES['image']
+
+        
+        print(type(f_image))
+        print(f_image)
+
+        filename = request.FILES['image'].name
+        f = os.path.splitext(filename)
+        n = f[0]
+        ext = f[1]
+        nameimageold = filename
+        
+
+
+
+        #115KV สายดิน
+        if  Circuit == "115KV" and Accessory == "สายดิน" and Case =="ขาด":
+            Accessory = "GR"
+            Case ="11"
+        if  Circuit == "115KV" and Accessory == "สายดิน" and Case =="หย่อน":
+            Accessory = "GR"
+            Case ="12"
+        if  Circuit == "115KV" and Accessory == "สายดิน" and Case =="เป็นสนิม":
+            Accessory = "GR"
+            Case ="13"
+        if  Circuit == "115KV" and Accessory == "สายดิน" and Case =="จุดสนิม":
+            Accessory = "GR"
+            Case ="14"
+        
+        #115KV ลูกถ้วย
+        if  Circuit == "115KV" and Accessory == "ลูกถ้วย" and Case =="แตก/บิ่น":
+            Accessory = "IN"
+            Case ="11"
+        if  Circuit == "115KV" and Accessory == "ลูกถ้วย" and Case =="แฟลช":
+            Accessory = "IN"
+            Case ="12"
+        if  Circuit == "115KV" and Accessory == "ลูกถ้วย" and Case =="แตกลาย":
+            Accessory = "IN"
+            Case ="13"
+        if  Circuit == "115KV" and Accessory == "ลูกถ้วย" and Case =="เปลี่ยนสี":
+            Accessory = "IN"
+            Case ="14"
+        if  Circuit == "115KV" and Accessory == "ลูกถ้วย" and Case =="คราปสกปรก":
+            Accessory = "IN"
+            Case ="15"
+
+        #115KV สายไฟ
+        if  Circuit == "115KV" and Accessory == "สายไฟ" and Case =="สายแตก":
+            Accessory = "LI"
+            Case ="11"
+        if  Circuit == "115KV" and Accessory == "สายไฟ" and Case =="คลายตัว":
+            Accessory = "LI"
+            Case ="12"
+        if  Circuit == "115KV" and Accessory == "สายไฟ" and Case =="อุปกรณ์จับสายชำรุด":
+            Accessory = "LI"
+            Case ="13"
+
+        #115KV จุดต่อ            
+        if  Circuit == "115KV" and Accessory == "จุดต่อ" and Case =="เปลี่ยนสี/เป็นสนิม":
+            Accessory = "CO"
+            Case ="11"
+        if  Circuit == "115KV" and Accessory == "จุดต่อ" and Case =="มีรอยอาร์ด":
+            Accessory = "CO"
+            Case ="12"
+        if  Circuit == "115KV" and Accessory == "จุดต่อ" and Case =="บิดงอเสียรูป":
+            Accessory = "CO"
+            Case ="13"
+
+        #115KV อุปกรณ์ตัดตอน  
+        if  Circuit == "115KV" and Accessory == "อุปกรณ์ตัดตอน" and Case =="บิน":
+            Accessory = "DS"
+            Case ="11"
+        if  Circuit == "115KV" and Accessory == "อุปกรณ์ตัดตอน" and Case =="แตก":
+            Accessory = "DS"
+            Case ="12"
+        if  Circuit == "115KV" and Accessory == "อุปกรณ์ตัดตอน" and Case =="มีรอยอาร์ค":
+            Accessory = "DS"
+            Case ="13"
+
+
+
+        #33KV สายดิน
+        if  Circuit == "33KV" and Accessory == "สายดิน" and Case =="ขาด":
+            Accessory = "GR"
+            Case ="31"
+        if  Circuit == "33KV" and Accessory == "สายดิน" and Case =="หย่อน":
+            Accessory = "GR"
+            Case ="32"
+        if  Circuit == "33KV" and Accessory == "สายดิน" and Case =="เป็นสนิม":
+            Accessory = "GR"
+            Case ="33"
+        if  Circuit == "33KV" and Accessory == "สายดิน" and Case =="จุดต่อหลวม":
+            Accessory = "GR"
+            Case ="34"
+
+
+        #33KV ลูกถ้วย
+        if  Circuit == "33KV" and Accessory == "ลูกถ้วย" and Case =="แตก/บิ่น":
+            Accessory = "IN"
+            Case ="31"
+        if  Circuit == "33KV" and Accessory == "ลูกถ้วย" and Case =="แฟลช":
+            Accessory = "IN"
+            Case ="32"
+        if  Circuit == "33KV" and Accessory == "ลูกถ้วย" and Case =="แตกลาย":
+            Accessory = "IN"
+            Case ="33"
+        if  Circuit == "33KV" and Accessory == "ลูกถ้วย" and Case =="เปลี่ยนสี":
+            Accessory = "IN"
+            Case ="34"
+        if  Circuit == "33KV" and Accessory == "ลูกถ้วย" and Case =="คราปสกปรก":
+            Accessory = "IN"
+            Case ="35"
+        
+        #33KV สายไฟ
+        if  Circuit == "33KV" and Accessory == "สายไฟ" and Case =="สายแตก":
+            Accessory = "LI"
+            Case ="31"
+        if  Circuit == "33KV" and Accessory == "สายไฟ" and Case =="คลายตัว":
+            Accessory = "LI"
+            Case ="32"
+        if  Circuit == "33KV" and Accessory == "สายไฟ" and Case =="อุปกรณ์จับสายชำรุด":
+            Accessory = "LI"
+            Case ="33"
+
+        #33KV จุดต่อ
+        if  Circuit == "33KV" and Accessory == "จุดต่อ" and Case =="เปลี่ยนสี/เป็นสนิม":
+            Accessory = "CO"
+            Case ="31"
+        if  Circuit == "33KV" and Accessory == "จุดต่อ" and Case =="มีรอยอาร์ด":
+            Accessory = "CO"
+            Case ="32"
+        if  Circuit == "33KV" and Accessory == "จุดต่อ" and Case =="บิดงอเสียรูป":
+            Accessory = "CO"
+            Case ="33"
+
+
+         #33KV ล่อฟ้า
+        if  Circuit == "33KV" and Accessory == "ล่อฟ้า" and Case =="บิ่นแตก/แตก/ฉีก":
+            Accessory = "LA"
+            Case ="31"
+        if  Circuit == "33KV" and Accessory == "ล่อฟ้า" and Case =="มีรอยอาร์ค":
+            Accessory = "LA"
+            Case ="32"
+        if  Circuit == "33KV" and Accessory == "ล่อฟ้า" and Case =="ผิวสกปรก":
+            Accessory = "LA"
+            Case ="33"
+        if  Circuit == "33KV" and Accessory == "ล่อฟ้า" and Case =="เปลี่ยนสี":
+            Accessory = "LA"
+            Case ="34"
+
+         #33KV คาปาซิเตอร์
+        if  Circuit == "33KV" and Accessory == "คาปาซิเตอร์" and Case =="บิ่น/แตก":
+            Accessory = "CA"
+            Case ="31"
+        if  Circuit == "33KV" and Accessory == "คาปาซิเตอร์" and Case =="มีรอยอาร์ค":
+            Accessory = "CA"
+            Case ="32"
+        if  Circuit == "33KV" and Accessory == "คาปาซิเตอร์" and Case =="ผิวสกปรก":
+            Accessory = "CA"
+            Case ="33"
+
+
+        #22 KV สายดิน
+        if  Circuit == "22KV" and Accessory == "สายดิน" and Case =="ขาด":
+            Accessory = "GR"
+            Case ="31"
+        if  Circuit == "22KV" and Accessory == "สายดิน" and Case =="หย่อน":
+            Accessory = "GR"
+            Case ="32"
+        if  Circuit == "22KV" and Accessory == "สายดิน" and Case =="เป็นสนิม":
+            Accessory = "GR"
+            Case ="33"
+        if  Circuit == "22KV" and Accessory == "สายดิน" and Case =="จุดต่อหลวม":
+            Accessory = "GR"
+            Case ="34"
+
+
+        #22 KV ลูกถ้วย
+        if  Circuit == "22KV" and Accessory == "ลูกถ้วย" and Case =="แตก/บิ่น":
+            Accessory = "IN"
+            Case ="31"
+        if  Circuit == "22KV" and Accessory == "ลูกถ้วย" and Case =="แฟลช":
+            Accessory = "IN"
+            Case ="32"
+        if  Circuit == "22KV" and Accessory == "ลูกถ้วย" and Case =="แตกลาย":
+            Accessory = "IN"
+            Case ="33"
+        if  Circuit == "22KV" and Accessory == "ลูกถ้วย" and Case =="เปลี่ยนสี":
+            Accessory = "IN"
+            Case ="34"
+        if  Circuit == "22KV" and Accessory == "ลูกถ้วย" and Case =="คราปสกปรก":
+            Accessory = "IN"
+            Case ="35"
+        
+        #22 KV สายไฟ
+        if  Circuit == "22KV" and Accessory == "สายไฟ" and Case =="สายแตก":
+            Accessory = "LI"
+            Case ="31"
+        if  Circuit == "22KV" and Accessory == "สายไฟ" and Case =="คลายตัว":
+            Accessory = "LI"
+            Case ="32"
+        if  Circuit == "22KV" and Accessory == "สายไฟ" and Case =="อุปกรณ์จับสายชำรุด":
+            Accessory = "LI"
+            Case ="33"
+
+        #22 KV จุดต่อ
+        if  Circuit == "22KV" and Accessory == "จุดต่อ" and Case =="เปลี่ยนสี/เป็นสนิม":
+            Accessory = "CO"
+            Case ="31"
+        if  Circuit == "22KV" and Accessory == "จุดต่อ" and Case =="มีรอยอาร์ด":
+            Accessory = "CO"
+            Case ="32"
+        if  Circuit == "22KV" and Accessory == "จุดต่อ" and Case =="บิดงอเสียรูป":
+            Accessory = "CO"
+            Case ="33"
+
+
+         #22 KV ล่อฟ้า
+        if  Circuit == "22KV" and Accessory == "ล่อฟ้า" and Case =="บิ่นแตก/แตก/ฉีก":
+            Accessory = "LA"
+            Case ="31"
+        if  Circuit == "22KV" and Accessory == "ล่อฟ้า" and Case =="มีรอยอาร์ค":
+            Accessory = "LA"
+            Case ="32"
+        if  Circuit == "22KV" and Accessory == "ล่อฟ้า" and Case =="ผิวสกปรก":
+            Accessory = "LA"
+            Case ="33"
+        if  Circuit == "22KV" and Accessory == "ล่อฟ้า" and Case =="เปลี่ยนสี":
+            Accessory = "LA"
+            Case ="34"
+
+         #22 KV คาปาซิเตอร์
+        if  Circuit == "22KV" and Accessory == "คาปาซิเตอร์" and Case =="บิ่น/แตก":
+            Accessory = "CA"
+            Case ="31"
+        if  Circuit == "22KV" and Accessory == "คาปาซิเตอร์" and Case =="มีรอยอาร์ค":
+            Accessory = "CA"
+            Case ="32"
+        if  Circuit == "22KV" and Accessory == "คาปาซิเตอร์" and Case =="ผิวสกปรก":
+            Accessory = "CA"
+            Case ="33"
+
+
+       #timedate & time in Python
+
+        timestr = time.strftime("%Y%m%d-%H%M%S")
+
+
+        f_image.name = "{}_{}_{}_{}{}".format(Circuit, Accessory, Case, timestr, ext)
+        print(f_image.name)
+
+
+        #past image
+        pathimage = "/media/{}".format(f_image.name) 
+        print(pathimage)
+
+
+        # UP image cload
+        uploaded_file = request.FILES['image']
+        print(uploaded_file)
+        payload=uploaded_file
+        headers = {
+        'Content-Type': 'image/jpg'
+        }
+        path_file = f_image.name
+
+        url = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/" + path_file
+
+
+        response = requests.request("PUT", url, headers=headers, data=payload)
+
+        pathoraclecloud = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/{}".format(f_image.name)
+
+        nameimagenew = f_image.name
+        ## save ข้อมูลลง ฐานข้อมูล 
+       
+        img = Image(Accessory=Accessory, Case=Case, Circuit=Circuit, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, pathoraclecloud=pathoraclecloud, image=f_image)
+        img.save()
+        
+        context={'data':{'Accessory':Accessory, 'Case':Case, 'Circuit':Circuit, 'pathimage':pathimage, 'pathoraclecloud':pathoraclecloud, 'image':f_image}}
+        ## save ข้อมูลลง ฐานข้อมูล 
+
+    
+        
+        return render(request,'home.html', context=context)
     return render(request, 'bad.html')
 
-def bad(request): #หน้า good.html
-  
-    return render(request, 'bad.html')
 def home(request): #หน้า good.html
   
     return render(request, 'home.html')

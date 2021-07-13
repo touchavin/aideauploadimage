@@ -1,4 +1,4 @@
-// เลือกอุปกรณ์
+// dropdown
 var subjectObject = {
     "115KV": {
         "สายดิน": ["ปกติ"],
