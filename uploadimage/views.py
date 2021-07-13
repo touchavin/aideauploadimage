@@ -6,6 +6,14 @@ def login(request): #หน้า index.html
   
     return render(request, 'login.html')
 
-# def good(request): #หน้า good.html
+def good(request): #หน้า good.html
   
-#     return render(request, 'good.html')
+    return render(request, 'good.html')
+
+def bad(request): #หน้า good.html
+  
+    return render(request, 'bad.html')
+
+def bad(request): #หน้า good.html
+  
+    return render(request, 'bad.html')

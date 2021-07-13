@@ -27,10 +27,6 @@ var subjectObject = {
         "อุปกรณ์ตัดตอน": ["ปกติ"],
     },
 
-
-
-
-
 }
 
 window.onload = function() {

@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from uploadimage.views import login
+from uploadimage.views import bad
+from uploadimage.views import good
 
 
 
@@ -25,6 +27,9 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin', admin.site.urls),
     path('login', login),
+    path('bad', bad),
+    path('good', good),
+  
   
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

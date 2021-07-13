@@ -5,11 +5,12 @@ class Image(models.Model):
     
     Day = models.DateField(auto_now_add=True)
     Time = models.TimeField(auto_now_add=True)
-    Office = models.CharField(max_length=100, blank=True, null=True)
     Circuit = models.CharField(max_length=100, blank=True, null=True)
     Accessory = models.CharField(max_length=100, blank=True, null=True)
     Case = models.CharField(max_length=100, blank=True, null=True)
     Customer_number = models.CharField(max_length=100, blank=True, null=True)
+    nameimageold = models.CharField(max_length=100, blank=True, null=True)
+    nameimagenew = models.CharField(max_length=100, blank=True, null=True)
     pathimage = models.CharField(max_length=100, blank=True, null=True) #เพิ่ม
     pathoraclecloud = models.URLField(max_length=500, blank=True, null=True)
     image = models.FileField(upload_to='media/', null=True, blank=True)
