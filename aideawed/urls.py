@@ -19,6 +19,7 @@ from uploadimage.views import login
 from uploadimage.views import bad
 from uploadimage.views import good
 from uploadimage.views import home
+from uploadimage.views import register
 
 
 
@@ -31,6 +32,8 @@ urlpatterns = [
     path('bad', bad),
     path('good', good),
     path('home', home),
+    path('register', register),
+  
   
   
     

@@ -48,16 +48,3 @@ window.onload = function() {
     }
 
 }
-
-// // เช็คว่ามีรูปภาพก่อนอัพโหลด
-
-// (document).ready(
-//     function() {
-//         $('input:file').change(
-//             function() {
-//                 if ($(this).val()) {
-//                     $('input:submit').attr('disabled', false);
-//                 }
-//             }
-//         );
-//     });
