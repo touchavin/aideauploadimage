@@ -31,11 +31,30 @@ import requests
 
 import os
 import time
+def test(request): #หน้า index.html
+    if request.method == 'POST':
+        Circuit = request.POST['subject1']
+        Customer_number= request.POST['Partner']
+       
+    
+        ## save ข้อมูลลง ฐานข้อมูล 
+
+       
+        img = Image(Customer_number=Customer_number, Circuit=Circuit)
+        img.save()
+        
+        context={'data':{'Circuit':Circuit}}
+        ## save ข้อมูลลง ฐานข้อมูล 
+    return render(request, 'test.html')
+
 def login(request): #หน้า index.html
     if request.method == 'POST':
         Customer_number = request.POST['Customer_number']
-        return render(request, 'home.html')
+        
+        context={'data':{'Customer_number':Customer_number}}
+        ## save ข้อมูลลง ฐานข้อมูล 
 
+        return render(request,'home.html', context=context)
     return render(request, 'login.html')
     
 
@@ -43,23 +62,22 @@ def login(request): #หน้า index.html
 def bad(request): #หน้า bad
     if request.method == 'POST':
         print(request.POST)
-        # Customer_number = request.POST['Customer_number']
-        Circuit = request.POST['subject']
+        Customer_number = request.POST['Partner']
+        Circuit = request.POST['subject1']
         Accessory = request.POST['topic']
         Case = request.POST['chapter']
         f_image = request.FILES['image']
-
         
         print(type(f_image))
         print(f_image)
-
+        print(Circuit)
+        
         filename = request.FILES['image'].name
         f = os.path.splitext(filename)
         n = f[0]
         ext = f[1]
         
         
-
 
 
         #115KV สายดิน
@@ -116,7 +134,7 @@ def bad(request): #หน้า bad
             Case ="13"
 
         #115KV อุปกรณ์ตัดตอน  
-        if  Circuit == "115KV" and Accessory == "อุปกรณ์ตัดตอน" and Case =="บิน":
+        if  Circuit == "115KV" and Accessory == "อุปกรณ์ตัดตอน" and Case =="บิ่น":
             Accessory = "DS"
             Case ="11"
         if  Circuit == "115KV" and Accessory == "อุปกรณ์ตัดตอน" and Case =="แตก":
@@ -290,12 +308,27 @@ def bad(request): #หน้า bad
             Case ="33"
 
 
+        # checklist nodata 
+        if  Circuit == " ":
+            Circuit = "NODATA"
+
+        if  Accessory == " ":
+            Accessory = "NODATA"
+            
+        if  Case == " ":
+            Case = "NODATA"
+
+        if  Customer_number == "":
+            Customer_number = "NODATA"
+
+
+
         #timedate & time in Python
 
         timestr = time.strftime("%Y%m%d-%H%M%S")
 
 
-        f_image.name = "{}_{}_{}_{}{}".format(Circuit, Accessory, Case, timestr, ext)
+        f_image.name = "{}_{}_{}_{}_{}{}".format(Customer_number, Circuit, Accessory, Case, timestr, ext)
         print(f_image.name)
 
 
@@ -324,10 +357,10 @@ def bad(request): #หน้า bad
         nameimagenew = f_image.name
         ## save ข้อมูลลง ฐานข้อมูล 
        
-        img = Image(Accessory=Accessory, Case=Case, Circuit=Circuit, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, pathoraclecloud=pathoraclecloud, image=f_image)
+        img = Image(Customer_number=Customer_number, Accessory=Accessory, Case=Case, Circuit=Circuit, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, pathoraclecloud=pathoraclecloud, image=f_image)
         img.save()
         
-        context={'data':{'Accessory':Accessory, 'Case':Case, 'Circuit':Circuit, 'pathimage':pathimage, 'pathoraclecloud':pathoraclecloud, 'image':f_image}}
+        context={'data':{'Customer_number':Customer_number, 'Accessory':Accessory, 'Case':Case, 'Circuit':Circuit, 'pathimage':pathimage, 'pathoraclecloud':pathoraclecloud, 'image':f_image}}
         ## save ข้อมูลลง ฐานข้อมูล 
 
     

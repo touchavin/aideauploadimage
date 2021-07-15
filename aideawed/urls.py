@@ -20,6 +20,7 @@ from uploadimage.views import bad
 from uploadimage.views import good
 from uploadimage.views import home
 from uploadimage.views import register
+from uploadimage.views import test
 
 
 
@@ -33,6 +34,7 @@ urlpatterns = [
     path('good', good),
     path('home', home),
     path('register', register),
+    path('test', test),
   
   
   

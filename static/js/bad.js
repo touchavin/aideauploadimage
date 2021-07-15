@@ -6,7 +6,7 @@ var subjectObject = {
         "ลูกถ้วย": ["แตก/บิ่น", "แฟลช", 'แตกลาย', 'เปลี่ยนสี', 'คราปสกปรก'],
         "สายไฟ": ["สายแตก", "คลายตัว", "อุปกรณ์จับสายชำรุด"],
         "จุดต่อ": ["เปลี่ยนสี/เป็นสนิม", "มีรอยอาร์ด", "บิดงอเสียรูป"],
-        "อุปกรณ์ตัดตอน": ["บิน", "แตก", "มีรอยอาร์ค"],
+        "อุปกรณ์ตัดตอน": ["บิ่น", "แตก", "มีรอยอาร์ค"],
 
     },
     "33KV": {
@@ -56,5 +56,22 @@ window.onload = function() {
         for (var i = 0; i < z.length; i++) {
             chapterSel.options[chapterSel.options.length] = new Option(z[i], z[i]);
         }
+    }
+}
+
+
+
+// show image upload
+function previewFile(input) {
+    var file = $("input[type=file]").get(0).files[0];
+
+    if (file) {
+        var reader = new FileReader();
+
+        reader.onload = function() {
+            $("#image").attr("src", reader.result);
+        }
+
+        reader.readAsDataURL(file);
     }
 }
