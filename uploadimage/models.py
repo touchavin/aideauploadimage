@@ -7,8 +7,18 @@ class Image(models.Model):
     Day = models.DateField(auto_now_add=True)
     Time = models.TimeField(auto_now_add=True)
     Circuit = models.CharField(max_length=100, blank=True, null=True)
+    Category = models.CharField(max_length=100, blank=True, null=True)
+    Category1 = models.CharField(max_length=100, blank=True, null=True)
+    Category2 = models.CharField(max_length=100, blank=True, null=True)
+   
     Accessory = models.CharField(max_length=100, blank=True, null=True)
+    Accessory1 = models.CharField(max_length=100, blank=True, null=True)
+    Accessory2 = models.CharField(max_length=100, blank=True, null=True)
+   
     Case = models.CharField(max_length=100, blank=True, null=True)
+    Case1 = models.CharField(max_length=100, blank=True, null=True)
+    Case2 = models.CharField(max_length=100, blank=True, null=True)
+  
     Customer_number = models.CharField(max_length=100, blank=True, null=True)
     nameimageold = models.CharField(max_length=100, blank=True, null=True)
     nameimagenew = models.CharField(max_length=100, blank=True, null=True)

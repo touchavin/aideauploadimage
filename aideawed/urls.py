@@ -21,6 +21,7 @@ from uploadimage.views import good
 from uploadimage.views import home
 from uploadimage.views import register
 from uploadimage.views import test
+from uploadimage.views import aidea
 
 
 
@@ -35,6 +36,7 @@ urlpatterns = [
     path('home', home),
     path('register', register),
     path('test', test),
+    path('aidea', aidea),
   
   
   
