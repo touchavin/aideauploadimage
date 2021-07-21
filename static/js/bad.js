@@ -77,6 +77,7 @@ window.onload = function() {
 //         "คาปาซิเตอร์": ["บิ่น/แตก", "มีรอยอาร์ค", "ผิวสกปรก"],
 
 
+<<<<<<< HEAD
 //     },
 //     "22 KV": {
 //         "สายดิน": ["ขาด", "หย่อน", "เป็นสนิม", "จุดต่อหลวม"],
@@ -117,6 +118,10 @@ window.onload = function() {
 //     }
 // }
 
+=======
+
+
+>>>>>>> 06666511289f7f44a3118bcf56ed9cd25ac58f00
 // function Reg() {
 //     var alice = document.getElementById("alice");
 //     console = log(alice.value);
