@@ -11,9 +11,10 @@
 </head>
 
 <body>
-
-    <!-- Multiple Select -->
-    <select multiple="multiple" name="langOpt[]">
+    <form name="myform" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <!-- Multiple Select -->
+        <select multiple="multiple" name="langOpt[]" id="langOpt[]">
       <option value="1">January</option>
       <option value="2">February</option>
       <option value="3">March</option>
@@ -27,15 +28,30 @@
       <option value="11">November</option>
       <option value="12">December</option>
       <input type="submit" id="btn_submit" value="อัพโหลดไฟล์รูปภาพ">
+      </select>
+    </form>
 
-    </select>
 
+    <!-- 
     <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
-    <script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
+    <script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script> -->
     <script>
         $(function() {
             $('select').multipleSelect()
         })
+    </script>
+    <script>
+        $(document).ready(function() {
+
+            var multipleCancelButton = new Choices('#choices-multiple-remove-button', {
+                removeItemButton: true,
+                maxItemCount: 5,
+                searchResultLimit: 5,
+                renderChoiceLimit: 5
+            });
+
+
+        });
     </script>
 </body>
 
