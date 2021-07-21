@@ -61,6 +61,8 @@ window.onload = function() {
 
 
 
+
+
 // function Reg() {
 //     var alice = document.getElementById("alice");
 //     console = log(alice.value);
