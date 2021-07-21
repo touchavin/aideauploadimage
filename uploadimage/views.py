@@ -345,16 +345,14 @@ def aidea(request): #หน้า aidea.html
 def test(request): #หน้า index.html
     if request.method == 'POST':
         Circuit = request.POST['langOpt[]']
+        print(Circuit)
     
        
     
         ## save ข้อมูลลง ฐานข้อมูล 
-
+        img = Image(Circuit=Circuit)
+        img.save()
        
-        
-        context={'data':{'Circuit':Circuit}}
-        ## save ข้อมูลลง ฐานข้อมูล 
-        
     return render(request, 'test.html')
 
 def login(request): #หน้า index.html
