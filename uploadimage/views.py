@@ -36,10 +36,12 @@ def aidea(request): #หน้า aidea.html
         print(request.POST)
         Customer_number = request.POST['Partner']
         Circuit = request.POST['subject1']
+        Category = request.POST['subject']
         Accessory = request.POST['topic']
         Case = request.POST['chapter']
         f_image = request.FILES['image']
         
+
         print(type(f_image))
         print(f_image)
         print(Circuit)
@@ -50,240 +52,23 @@ def aidea(request): #หน้า aidea.html
         n = f[0]
         ext = f[1]
         
-       
-    
-
-        #115KV สายดิน
-        if  Circuit == "115KV" and Accessory == "สายดิน" and Case =="ขาด":
-            Accessory = "GR"
-            Case ="11"
-        if  Circuit == "115KV" and Accessory == "สายดิน" and Case =="หย่อน":
-            Accessory = "GR"
-            Case ="12"
-        if  Circuit == "115KV" and Accessory == "สายดิน" and Case =="เป็นสนิม":
-            Accessory = "GR"
-            Case ="13"
-        if  Circuit == "115KV" and Accessory == "สายดิน" and Case =="จุดสนิม":
-            Accessory = "GR"
-            Case ="14"
+        #22KV เสา
+        if  Circuit == "22KV" and Category == "เสา" and Accessory == "เสาคอนกรีต" and Case =="สภาพปกติ":
+            Circuit = "D"
+            Category = "PO"
+            Accessory = "0"
+            Case ="0A"
         
-        #115KV ลูกถ้วย
-        if  Circuit == "115KV" and Accessory == "ลูกถ้วย" and Case =="แตก/บิ่น":
-            Accessory = "IN"
-            Case ="11"
-        if  Circuit == "115KV" and Accessory == "ลูกถ้วย" and Case =="แฟลช":
-            Accessory = "IN"
-            Case ="12"
-        if  Circuit == "115KV" and Accessory == "ลูกถ้วย" and Case =="แตกลาย":
-            Accessory = "IN"
-            Case ="13"
-        if  Circuit == "115KV" and Accessory == "ลูกถ้วย" and Case =="เปลี่ยนสี":
-            Accessory = "IN"
-            Case ="14"
-        if  Circuit == "115KV" and Accessory == "ลูกถ้วย" and Case =="คราปสกปรก":
-            Accessory = "IN"
-            Case ="15"
-
-        #115KV สายไฟ
-        if  Circuit == "115KV" and Accessory == "สายไฟ" and Case =="สายแตก":
-            Accessory = "LI"
-            Case ="11"
-        if  Circuit == "115KV" and Accessory == "สายไฟ" and Case =="คลายตัว":
-            Accessory = "LI"
-            Case ="12"
-        if  Circuit == "115KV" and Accessory == "สายไฟ" and Case =="อุปกรณ์จับสายชำรุด":
-            Accessory = "LI"
-            Case ="13"
-
-        #115KV จุดต่อ            
-        if  Circuit == "115KV" and Accessory == "จุดต่อ" and Case =="เปลี่ยนสี/เป็นสนิม":
-            Accessory = "CO"
-            Case ="11"
-        if  Circuit == "115KV" and Accessory == "จุดต่อ" and Case =="มีรอยอาร์ด":
-            Accessory = "CO"
-            Case ="12"
-        if  Circuit == "115KV" and Accessory == "จุดต่อ" and Case =="บิดงอเสียรูป":
-            Accessory = "CO"
-            Case ="13"
-
-        #115KV อุปกรณ์ตัดตอน  
-        if  Circuit == "115KV" and Accessory == "อุปกรณ์ตัดตอน" and Case =="บิ่น":
-            Accessory = "DS"
-            Case ="11"
-        if  Circuit == "115KV" and Accessory == "อุปกรณ์ตัดตอน" and Case =="แตก":
-            Accessory = "DS"
-            Case ="12"
-        if  Circuit == "115KV" and Accessory == "อุปกรณ์ตัดตอน" and Case =="มีรอยอาร์ค":
-            Accessory = "DS"
-            Case ="13"
-
-
-
-        #33KV สายดิน
-        if  Circuit == "33KV" and Accessory == "สายดิน" and Case =="ขาด":
-            Accessory = "GR"
-            Case ="31"
-        if  Circuit == "33KV" and Accessory == "สายดิน" and Case =="หย่อน":
-            Accessory = "GR"
-            Case ="32"
-        if  Circuit == "33KV" and Accessory == "สายดิน" and Case =="เป็นสนิม":
-            Accessory = "GR"
-            Case ="33"
-        if  Circuit == "33KV" and Accessory == "สายดิน" and Case =="จุดต่อหลวม":
-            Accessory = "GR"
-            Case ="34"
-
-
-        #33KV ลูกถ้วย
-        if  Circuit == "33KV" and Accessory == "ลูกถ้วย" and Case =="แตก/บิ่น":
-            Accessory = "IN"
-            Case ="31"
-        if  Circuit == "33KV" and Accessory == "ลูกถ้วย" and Case =="แฟลช":
-            Accessory = "IN"
-            Case ="32"
-        if  Circuit == "33KV" and Accessory == "ลูกถ้วย" and Case =="แตกลาย":
-            Accessory = "IN"
-            Case ="33"
-        if  Circuit == "33KV" and Accessory == "ลูกถ้วย" and Case =="เปลี่ยนสี":
-            Accessory = "IN"
-            Case ="34"
-        if  Circuit == "33KV" and Accessory == "ลูกถ้วย" and Case =="คราปสกปรก":
-            Accessory = "IN"
-            Case ="35"
-        
-        #33KV สายไฟ
-        if  Circuit == "33KV" and Accessory == "สายไฟ" and Case =="สายแตก":
-            Accessory = "LI"
-            Case ="31"
-        if  Circuit == "33KV" and Accessory == "สายไฟ" and Case =="คลายตัว":
-            Accessory = "LI"
-            Case ="32"
-        if  Circuit == "33KV" and Accessory == "สายไฟ" and Case =="อุปกรณ์จับสายชำรุด":
-            Accessory = "LI"
-            Case ="33"
-
-        #33KV จุดต่อ
-        if  Circuit == "33KV" and Accessory == "จุดต่อ" and Case =="เปลี่ยนสี/เป็นสนิม":
-            Accessory = "CO"
-            Case ="31"
-        if  Circuit == "33KV" and Accessory == "จุดต่อ" and Case =="มีรอยอาร์ด":
-            Accessory = "CO"
-            Case ="32"
-        if  Circuit == "33KV" and Accessory == "จุดต่อ" and Case =="บิดงอเสียรูป":
-            Accessory = "CO"
-            Case ="33"
-
-
-         #33KV ล่อฟ้า
-        if  Circuit == "33KV" and Accessory == "ล่อฟ้า" and Case =="บิ่นแตก/แตก/ฉีก":
-            Accessory = "LA"
-            Case ="31"
-        if  Circuit == "33KV" and Accessory == "ล่อฟ้า" and Case =="มีรอยอาร์ค":
-            Accessory = "LA"
-            Case ="32"
-        if  Circuit == "33KV" and Accessory == "ล่อฟ้า" and Case =="ผิวสกปรก":
-            Accessory = "LA"
-            Case ="33"
-        if  Circuit == "33KV" and Accessory == "ล่อฟ้า" and Case =="เปลี่ยนสี":
-            Accessory = "LA"
-            Case ="34"
-
-         #33KV คาปาซิเตอร์
-        if  Circuit == "33KV" and Accessory == "คาปาซิเตอร์" and Case =="บิ่น/แตก":
-            Accessory = "CA"
-            Case ="31"
-        if  Circuit == "33KV" and Accessory == "คาปาซิเตอร์" and Case =="มีรอยอาร์ค":
-            Accessory = "CA"
-            Case ="32"
-        if  Circuit == "33KV" and Accessory == "คาปาซิเตอร์" and Case =="ผิวสกปรก":
-            Accessory = "CA"
-            Case ="33"
-
-
-        #22 KV สายดิน
-        if  Circuit == "22KV" and Accessory == "สายดิน" and Case =="ขาด":
-            Accessory = "GR"
-            Case ="31"
-        if  Circuit == "22KV" and Accessory == "สายดิน" and Case =="หย่อน":
-            Accessory = "GR"
-            Case ="32"
-        if  Circuit == "22KV" and Accessory == "สายดิน" and Case =="เป็นสนิม":
-            Accessory = "GR"
-            Case ="33"
-        if  Circuit == "22KV" and Accessory == "สายดิน" and Case =="จุดต่อหลวม":
-            Accessory = "GR"
-            Case ="34"
-
-
-        #22 KV ลูกถ้วย
-        if  Circuit == "22KV" and Accessory == "ลูกถ้วย" and Case =="แตก/บิ่น":
-            Accessory = "IN"
-            Case ="31"
-        if  Circuit == "22KV" and Accessory == "ลูกถ้วย" and Case =="แฟลช":
-            Accessory = "IN"
-            Case ="32"
-        if  Circuit == "22KV" and Accessory == "ลูกถ้วย" and Case =="แตกลาย":
-            Accessory = "IN"
-            Case ="33"
-        if  Circuit == "22KV" and Accessory == "ลูกถ้วย" and Case =="เปลี่ยนสี":
-            Accessory = "IN"
-            Case ="34"
-        if  Circuit == "22KV" and Accessory == "ลูกถ้วย" and Case =="คราปสกปรก":
-            Accessory = "IN"
-            Case ="35"
-        
-        #22 KV สายไฟ
-        if  Circuit == "22KV" and Accessory == "สายไฟ" and Case =="สายแตก":
-            Accessory = "LI"
-            Case ="31"
-        if  Circuit == "22KV" and Accessory == "สายไฟ" and Case =="คลายตัว":
-            Accessory = "LI"
-            Case ="32"
-        if  Circuit == "22KV" and Accessory == "สายไฟ" and Case =="อุปกรณ์จับสายชำรุด":
-            Accessory = "LI"
-            Case ="33"
-
-        #22 KV จุดต่อ
-        if  Circuit == "22KV" and Accessory == "จุดต่อ" and Case =="เปลี่ยนสี/เป็นสนิม":
-            Accessory = "CO"
-            Case ="31"
-        if  Circuit == "22KV" and Accessory == "จุดต่อ" and Case =="มีรอยอาร์ด":
-            Accessory = "CO"
-            Case ="32"
-        if  Circuit == "22KV" and Accessory == "จุดต่อ" and Case =="บิดงอเสียรูป":
-            Accessory = "CO"
-            Case ="33"
-
-
-         #22 KV ล่อฟ้า
-        if  Circuit == "22KV" and Accessory == "ล่อฟ้า" and Case =="บิ่นแตก/แตก/ฉีก":
-            Accessory = "LA"
-            Case ="31"
-        if  Circuit == "22KV" and Accessory == "ล่อฟ้า" and Case =="มีรอยอาร์ค":
-            Accessory = "LA"
-            Case ="32"
-        if  Circuit == "22KV" and Accessory == "ล่อฟ้า" and Case =="ผิวสกปรก":
-            Accessory = "LA"
-            Case ="33"
-        if  Circuit == "22KV" and Accessory == "ล่อฟ้า" and Case =="เปลี่ยนสี":
-            Accessory = "LA"
-            Case ="34"
-
-         #22 KV คาปาซิเตอร์
-        if  Circuit == "22KV" and Accessory == "คาปาซิเตอร์" and Case =="บิ่น/แตก":
-            Accessory = "CA"
-            Case ="31"
-        if  Circuit == "22KV" and Accessory == "คาปาซิเตอร์" and Case =="มีรอยอาร์ค":
-            Accessory = "CA"
-            Case ="32"
-        if  Circuit == "22KV" and Accessory == "คาปาซิเตอร์" and Case =="ผิวสกปรก":
-            Accessory = "CA"
-            Case ="33"
-
 
         # checklist nodata 
+        if  Customer_number == " ":
+            Customer_number = "NODATA"
+    
         if  Circuit == " ":
             Circuit = "NODATA"
+
+        if  Category == " ":
+            Category = "NODATA"
 
         if  Accessory == " ":
             Accessory = "NODATA"
@@ -291,9 +76,7 @@ def aidea(request): #หน้า aidea.html
         if  Case == " ":
             Case = "NODATA"
 
-        if  Customer_number == " ":
-            Customer_number = "NODATA"
-
+        
 
 
         #timedate & time in Python
@@ -301,7 +84,7 @@ def aidea(request): #หน้า aidea.html
         timestr = time.strftime("%Y%m%d-%H%M%S")
 
 
-        f_image.name = "{}_{}_{}_{}_{}{}".format(Customer_number, Circuit, Accessory, Case, timestr, ext)
+        f_image.name = "{}_{}_{}_{}_{}_{}{}".format(Customer_number, Circuit, Category, Accessory, Case, timestr, ext)
         print(f_image.name)
 
 
@@ -340,6 +123,7 @@ def aidea(request): #หน้า aidea.html
         
         return render(request,'home.html', context=context)
     return render(request, 'aidea.html')
+
 
    
 def test(request): #หน้า index.html
