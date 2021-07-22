@@ -38,19 +38,19 @@ def aidea(request): #หน้า aidea.html
         Circuit = request.POST['subject1']
         Category = request.POST['subject']
         Accessory = request.POST['topic']
-        Case = request.POST['chapter']
-        f_image = request.FILES['image']
         
+        f_image = request.FILES['image']
+
+        Case = "สภาพปกติ,บิ่นแตก"
 
         print(type(f_image))
         print(f_image)
         print(Circuit)
         print(Case)
 
-        filename = request.FILES['image'].name
-        f = os.path.splitext(filename)
-        n = f[0]
-        ext = f[1]
+        
+        
+        
         
         #22KV เสา
         if  Circuit == "22KV" and Category == "เสา" and Accessory == "เสาคอนกรีต" and Case =="สภาพปกติ":
@@ -58,6 +58,112 @@ def aidea(request): #หน้า aidea.html
             Category = "PO"
             Accessory = "0"
             Case ="0A"
+
+        if  Circuit == "22KV" and Category == "เสา" and Accessory == "เสาคอนกรีต" and Case =="บิ่นแตก":
+            Circuit = "D"
+            Category = "PO"
+            Accessory = "0"
+            Case ="2A"
+        
+        if  Circuit == "22KV" and Category == "เสา" and Accessory == "เสาคอนกรีต" and Case =="สภาพปกติ,บิ่นแตก":
+            Circuit = "D"
+            Category = "PO"
+            Accessory = "0"
+            Case ="0A"
+
+            filename = request.FILES['image'].name
+            f = os.path.splitext(filename)
+            n = f[0]
+            ext = f[1]
+            #timedate & time in Python
+
+            timestr = time.strftime("%Y%m%d-%H%M%S")
+
+
+            f_image.name = "{}_{}_{}_{}_{}_{}{}".format(Customer_number, Circuit, Category, Accessory, Case, timestr, ext)
+            print(f_image.name)
+
+
+            #past image
+            pathimage = "/media/{}".format(f_image.name) 
+            print(pathimage)
+
+
+            # UP image cload
+            uploaded_file = request.FILES['image']
+            print(uploaded_file)
+            payload=uploaded_file
+            headers = {
+            'Content-Type': 'image/jpg'
+            }
+            path_file = f_image.name
+
+            url = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/" + path_file
+
+
+            response = requests.request("PUT", url, headers=headers, data=payload)
+
+            pathoraclecloud = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/{}".format(f_image.name)
+
+            nameimageold = filename
+            nameimagenew = f_image.name
+            ## save ข้อมูลลง ฐานข้อมูล 
+            
+            img = Image(Customer_number=Customer_number, Category=Category, Accessory=Accessory, Case=Case, Circuit=Circuit, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, pathoraclecloud=pathoraclecloud, image=f_image)
+            img.save()
+            
+            context={'data':{'Customer_number':Customer_number, 'Category':Category, 'Accessory':Accessory, 'Case':Case, 'Circuit':Circuit, 'pathimage':pathimage, 'pathoraclecloud':pathoraclecloud, 'image':f_image}}
+            ## save ข้อมูลลง ฐานข้อมูล 
+
+            Circuit = "D"
+            Category = "PO"
+            Accessory = "0"
+            Case ="2A"
+
+            filename = request.FILES['image'].name
+            f = os.path.splitext(filename)
+            n = f[0]
+            ext = f[1]
+            #timedate & time in Python
+
+            timestr = time.strftime("%Y%m%d-%H%M%S")
+
+
+            f_image.name = "{}_{}_{}_{}_{}_{}{}".format(Customer_number, Circuit, Category, Accessory, Case, timestr, ext)
+            print(f_image.name)
+
+
+            #past image
+            pathimage = "/media/{}".format(f_image.name) 
+            print(pathimage)
+
+
+            # UP image cload
+            uploaded_file = request.FILES['image']
+            print(uploaded_file)
+            payload=uploaded_file
+            headers = {
+            'Content-Type': 'image/jpg'
+            }
+            path_file = f_image.name
+
+            url = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/" + path_file
+
+
+            response = requests.request("PUT", url, headers=headers, data=payload)
+
+            pathoraclecloud = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/{}".format(f_image.name)
+
+            nameimageold = filename
+            nameimagenew = f_image.name
+            ## save ข้อมูลลง ฐานข้อมูล 
+            
+            img = Image(Customer_number=Customer_number, Category=Category, Accessory=Accessory, Case=Case, Circuit=Circuit, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, pathoraclecloud=pathoraclecloud, image=f_image)
+            img.save()
+            
+            context={'data':{'Customer_number':Customer_number, 'Category':Category, 'Accessory':Accessory, 'Case':Case, 'Circuit':Circuit, 'pathimage':pathimage, 'pathoraclecloud':pathoraclecloud, 'image':f_image}}
+            ## save ข้อมูลลง ฐานข้อมูล 
+        
         
 
         # checklist nodata 
@@ -79,45 +185,48 @@ def aidea(request): #หน้า aidea.html
         
 
 
-        #timedate & time in Python
+        # #timedate & time in Python
 
-        timestr = time.strftime("%Y%m%d-%H%M%S")
-
-
-        f_image.name = "{}_{}_{}_{}_{}_{}{}".format(Customer_number, Circuit, Category, Accessory, Case, timestr, ext)
-        print(f_image.name)
+        # timestr = time.strftime("%Y%m%d-%H%M%S")
 
 
-        #past image
-        pathimage = "/media/{}".format(f_image.name) 
-        print(pathimage)
+        # f_image.name = "{}_{}_{}_{}_{}_{}{}".format(Customer_number, Circuit, Category, Accessory, Case, timestr, ext)
+        # print(f_image.name)
 
 
-        # UP image cload
-        uploaded_file = request.FILES['image']
-        print(uploaded_file)
-        payload=uploaded_file
-        headers = {
-        'Content-Type': 'image/jpg'
-        }
-        path_file = f_image.name
-
-        url = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/" + path_file
+        # #past image
+        # pathimage = "/media/{}".format(f_image.name) 
+        # print(pathimage)
 
 
-        response = requests.request("PUT", url, headers=headers, data=payload)
+        # # UP image cload
+        # uploaded_file = request.FILES['image']
+        # print(uploaded_file)
+        # payload=uploaded_file
+        # headers = {
+        # 'Content-Type': 'image/jpg'
+        # }
+        # path_file = f_image.name
 
-        pathoraclecloud = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/{}".format(f_image.name)
+        # url = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/" + path_file
 
-        nameimageold = filename
-        nameimagenew = f_image.name
-        ## save ข้อมูลลง ฐานข้อมูล 
-       
-        img = Image(Customer_number=Customer_number, Accessory=Accessory, Case=Case, Circuit=Circuit, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, pathoraclecloud=pathoraclecloud, image=f_image)
-        img.save()
+
+        # response = requests.request("PUT", url, headers=headers, data=payload)
+
+        # pathoraclecloud = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/{}".format(f_image.name)
+
+        # nameimageold = filename
+        # nameimagenew = f_image.name
+        # ## save ข้อมูลลง ฐานข้อมูล 
         
-        context={'data':{'Customer_number':Customer_number, 'Accessory':Accessory, 'Case':Case, 'Circuit':Circuit, 'pathimage':pathimage, 'pathoraclecloud':pathoraclecloud, 'image':f_image}}
-        ## save ข้อมูลลง ฐานข้อมูล 
+        # img = Image(Customer_number=Customer_number, Category=Category, Accessory=Accessory, Case=Case, Circuit=Circuit, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, pathoraclecloud=pathoraclecloud, image=f_image)
+        # img.save()
+        
+        # context={'data':{'Customer_number':Customer_number, 'Category':Category, 'Accessory':Accessory, 'Case':Case, 'Circuit':Circuit, 'pathimage':pathimage, 'pathoraclecloud':pathoraclecloud, 'image':f_image}}
+        # ## save ข้อมูลลง ฐานข้อมูล 
+
+
+        
 
     
         
