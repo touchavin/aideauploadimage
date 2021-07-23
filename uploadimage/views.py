@@ -48,7 +48,7 @@ def aidea(request): #หน้า aidea.html
         print(Circuit)
         print(Case)
 
-        
+      
         
         
         
@@ -114,7 +114,7 @@ def aidea(request): #หน้า aidea.html
             
             context={'data':{'Customer_number':Customer_number, 'Category':Category, 'Accessory':Accessory, 'Case':Case, 'Circuit':Circuit, 'pathimage':pathimage, 'pathoraclecloud':pathoraclecloud, 'image':f_image}}
             ## save ข้อมูลลง ฐานข้อมูล 
-
+            f_image = request.FILES['image']
             Circuit = "D"
             Category = "PO"
             Accessory = "0"
@@ -128,7 +128,7 @@ def aidea(request): #หน้า aidea.html
 
             timestr = time.strftime("%Y%m%d-%H%M%S")
 
-
+            
             f_image.name = "{}_{}_{}_{}_{}_{}{}".format(Customer_number, Circuit, Category, Accessory, Case, timestr, ext)
             print(f_image.name)
 
@@ -147,10 +147,12 @@ def aidea(request): #หน้า aidea.html
             }
             path_file = f_image.name
 
+
             url = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/" + path_file
 
 
             response = requests.request("PUT", url, headers=headers, data=payload)
+          
 
             pathoraclecloud = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/{}".format(f_image.name)
 
