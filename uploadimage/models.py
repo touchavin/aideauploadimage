@@ -16,6 +16,7 @@ class Image(models.Model):
     eq_name = models.CharField(max_length=100, blank=True, null=True)
     subeq_name = models.CharField(max_length=100, blank=True, null=True)
     abnor_name = models.CharField(max_length=100, blank=True, null=True) 
+    abnor_other = models.CharField(max_length=200, blank=True, null=True) 
     nameimageold = models.CharField(max_length=100, blank=True, null=True)
     nameimagenew = models.CharField(max_length=100, blank=True, null=True)
     pathimage = models.CharField(max_length=100, blank=True, null=True) #เพิ่ม
