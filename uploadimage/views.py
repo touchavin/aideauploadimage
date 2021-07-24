@@ -212,28 +212,201 @@ def aidea(request): #หน้า aidea.html
             if  abnor_name =="หลวม,หลุด":
                 abnor_name ="09"
 
-            if  abnor_name =="bolt/nut หลวม,หลุด":
+            if  abnor_name =="ก้านเป็นสนิม":
                 abnor_name ="10"
-            if  abnor_name =="สภาพปกติ":
+
+            if  abnor_name =="bolt/nut หลวม,หลุด":
                 abnor_name ="11"
-            if  abnor_name =="สภาพปกติ":
+
+            if  abnor_name =="bolt/nut เปลี่ยนสี,เป็นสนิม":
                 abnor_name ="12"
-            if  abnor_name =="สภาพปกติ":
+
+            if  abnor_name =="bond wire หลุด,ขาด":
                 abnor_name ="13"
-            if  abnor_name =="สภาพปกติ":
+
+            if  abnor_name =="จุดต่อที่OHGW : หลวม,หลุด":
                 abnor_name ="14"
-            if  abnor_name =="สภาพปกติ":
+
+            if  abnor_name =="จุดต่อที่OHGW : เปลี่ยนสี":
                 abnor_name ="15"
-            if  abnor_name =="สภาพปกติ":
+
+            if  abnor_name =="จุดต่อที่OHGW : รอยอาร์ค":
                 abnor_name ="16"
 
+            if  abnor_name =="จุดต่อที่OHGW : เป็นสนิม":
+                abnor_name ="17"
+
+            if  abnor_name =="จุดต่อที่หัวเสา : หลวม,หลุด":
+                abnor_name ="18"
 
 
+            if  abnor_name =="จุดต่อที่หัวเสา : เปลี่ยนสี":
+                abnor_name ="19"
 
+            if  abnor_name =="จุดต่อที่หัวเสา : รอยอาร์ค":
+                abnor_name ="20"
+                
+            if  abnor_name =="จุดต่อที่หัวเสา : เป็นสนิม":
+                abnor_name ="21"
+
+            if  abnor_name =="สายขาด":
+                abnor_name ="22"
+
+            if  abnor_name =="รอยแตก,ขาด":
+                abnor_name ="23"
+
+            if  abnor_name =="หลุดจากลูกถ้วย":
+                abnor_name ="24"
+
+            if  abnor_name =="หลุดจากลูกถ้วย/สเปเซอร์":
+                abnor_name ="25"
+
+            if  abnor_name =="ลูกถ้วยซับพอร์ต : เป็นสนิม":
+                abnor_name ="26"
+
+            if  abnor_name =="ลูกถ้วยซับพอร์ต : หลวม,หลุด":
+                abnor_name ="27"
+
+            if  abnor_name =="ลูกถ้วยซับพอร์ต : บิ่น,แตก":
+                abnor_name ="28"
+
+            if  abnor_name =="ลูกถ้วยซับพอร์ต : เปลี่ยนสี":
+                abnor_name ="29"
+
+            if  abnor_name =="ลูกถ้วยซับพอร์ต : รอยอาร์ค":
+                abnor_name ="30"
+
+            if  abnor_name =="ลูกถ้วยซับพอร์ต : ผิวสกปรก":
+                abnor_name ="31"
+
+            if  abnor_name =="จุดต่อ terminal clamp/หางปลา : หลวม,หลุด":
+                abnor_name ="32"
+
+            if  abnor_name =="จุดต่อ terminal clamp/หางปลา : เป็นสนิม":
+                abnor_name ="33"
+
+            if  abnor_name =="จุดต่อ terminal clamp/หางปลา : รอยอาร์ค":
+                abnor_name ="34"
+                
+            if  abnor_name =="ลูกถ้วย : บิ่น,แตก":
+                abnor_name ="35"
+
+            if  abnor_name =="ลูกถ้วย : เปลี่ยนสี":
+                abnor_name ="36"
+
+            if  abnor_name =="ลูกถ้วย : รอยอาร์ค":
+                abnor_name ="37"
+
+            if  abnor_name =="ลูกถ้วย : ผิวสกปรก":
+                abnor_name ="38"
+
+            if  abnor_name =="จุดต่อ terminal clamp : หลวม,หลุด":
+                abnor_name ="39"
+
+            if  abnor_name =="จุดต่อ terminal clamp : เป็นสนิม":
+                abnor_name ="40"
+
+            if  abnor_name =="จุดต่อ terminal clamp : รอยอาร์ค":
+                abnor_name ="41"
+
+            if  abnor_name =="Bracket : เป็นสนิม":
+                abnor_name ="42"
+
+            if  abnor_name =="Bracket : หลวม,หลุด":
+                abnor_name ="43"
+
+            if  abnor_name =="บุชชิ่ง : บิ่น,แตก":
+                abnor_name ="44"
+
+            if  abnor_name =="บุชชิ่ง : เปลี่ยนสี":
+                abnor_name ="45"
+
+            if  abnor_name =="บุชชิ่ง : รอยอาร์ค":
+                abnor_name ="46"
+
+            if  abnor_name =="บุชชิ่ง : ผิวสกปรก":
+                abnor_name ="47"
+
+            if  abnor_name =="บุชชิ่ง :  หลวม,หลุด":
+                abnor_name ="48"
+                
+            if  abnor_name =="ตัวถัง : เป็นสนิม":
+                abnor_name ="49"
+
+            if  abnor_name =="ตัวถัง : น้ำมันรั่ว":
+                abnor_name ="50"
+
+            if  abnor_name =="สายลีด : หลวม,หลุด":
+                abnor_name ="51"
+
+            if  abnor_name =="สายต่อลงดิน : รอยอาร์ค":
+                abnor_name ="52"
+
+            if  abnor_name =="สายต่อลงดิน : หลวม,หลุด":
+                abnor_name ="53"
+
+            if  abnor_name =="ครีบ : บิ่น,แตก":
+                abnor_name ="54"
+
+            if  abnor_name =="ครีบ : เปลี่ยนสี":
+                abnor_name ="55"
+
+            if  abnor_name =="ครีบ : รอยอาร์ค":
+                abnor_name ="56"
+
+            if  abnor_name =="ครีบ : ผิวสกปรก":
+                abnor_name ="57"
+
+            if  abnor_name =="ครีบ : ฉีกขาด":
+                abnor_name ="58"
+
+            if  abnor_name =="ชุดแขวนคาปา (Hanger) ชำรุด":
+                abnor_name ="59"
+
+            if  abnor_name =="ชุด interrupt : ชำรุด":
+                abnor_name ="60"
+
+            if  abnor_name =="จุดต่อ terminal : หลวม,หลุด":
+                abnor_name ="61"
+
+            if  abnor_name =="จุดต่อ terminal : เป็นสนิม":
+                abnor_name ="62"
+                
+            if  abnor_name =="จุดต่อ terminal : รอยอาร์ค":
+                abnor_name ="63"
+
+            if  abnor_name =="ไม้แป้น : ชำรุด":
+                abnor_name ="64"
+
+            if  abnor_name =="จุดต่อOHGW/OPGW : หลวม,หลุด":
+                abnor_name ="65"
+
+            if  abnor_name =="จุดต่อOHGW/OPGW : เปลี่ยนสี":
+                abnor_name ="66"
+
+            if  abnor_name =="จุดต่อOHGW/OPGW : รอยอาร์ค":
+                abnor_name ="67"
+
+            if  abnor_name =="จุดต่อOHGW/OPGW : เป็นสนิม":
+                abnor_name ="68"
+
+            if  abnor_name =="จุดต่อที่ GROUND PLATE : หลวม,หลุด":
+                abnor_name ="69"
+
+            if  abnor_name =="จุดต่อ terminal clamp/pad : รอยอาร์ค":
+                abnor_name ="70"
+
+            if  abnor_name =="ชุดตัดอาร์ค หนวดกุ้ง : ชำรุด":
+                abnor_name ="71"
+
+            if  abnor_name =="ชุดดับอาร์ค : ชำรุด":
+                abnor_name ="72"
 
             if  abnor_name =="อื่นๆ":
                 abnor_name ="73"
 
+
+            # เปลี่ยนชื่อรูปภาพ
             filename = request.FILES['image'].name
             f = os.path.splitext(filename)
             n = f[0]
@@ -283,70 +456,6 @@ def aidea(request): #หน้า aidea.html
 
 
 
-
-
-# bolt/nut เปลี่ยนสี,เป็นสนิม
-# bond wire หลุด,ขาด
-# จุดต่อที่OHGW : หลวม,หลุด
-# จุดต่อที่OHGW : เปลี่ยนสี
-# จุดต่อที่OHGW : รอยอาร์ค
-# จุดต่อที่OHGW : เป็นสนิม
-# จุดต่อที่หัวเสา : หลวม,หลุด
-# จุดต่อที่หัวเสา : เปลี่ยนสี
-# จุดต่อที่หัวเสา : รอยอาร์ค
-# จุดต่อที่หัวเสา : เป็นสนิม
-# สายขาด
-# รอยแตก,ขาด
-# หลุดจากลูกถ้วย
-# หลุดจากลูกถ้วย/สเปเซอร์
-# ลูกถ้วยซับพอร์ต : เป็นสนิม
-# ลูกถ้วยซับพอร์ต : หลวม,หลุด
-# ลูกถ้วยซับพอร์ต : บิ่น,แตก
-# ลูกถ้วยซับพอร์ต : เปลี่ยนสี
-# ลูกถ้วยซับพอร์ต : รอยอาร์ค
-# ลูกถ้วยซับพอร์ต : ผิวสกปรก
-# จุดต่อ terminal clamp/หางปลา : หลวม,หลุด
-# จุดต่อ terminal clamp/หางปลา : เป็นสนิม
-# จุดต่อ terminal clamp/หางปลา : รอยอาร์ค
-# ลูกถ้วย : บิ่น,แตก
-# ลูกถ้วย : เปลี่ยนสี
-# ลูกถ้วย : รอยอาร์ค
-# ลูกถ้วย : ผิวสกปรก
-# จุดต่อ terminal clamp : หลวม,หลุด
-# จุดต่อ terminal clamp : เป็นสนิม
-# จุดต่อ terminal clamp : รอยอาร์ค
-# Bracket : เป็นสนิม
-# Bracket : หลวม,หลุด
-# บุชชิ่ง : บิ่น,แตก
-# บุชชิ่ง : เปลี่ยนสี
-# บุชชิ่ง : รอยอาร์ค
-# บุชชิ่ง : ผิวสกปรก
-# บุชชิ่ง :  หลวม,หลุด
-# ตัวถัง : เป็นสนิม
-# ตัวถัง : น้ำมันรั่ว
-# สายลีด : หลวม,หลุด
-# สายต่อลงดิน : รอยอาร์ค
-# สายต่อลงดิน : หลวม,หลุด
-# ครีบ : บิ่น,แตก
-# ครีบ : เปลี่ยนสี
-# ครีบ : รอยอาร์ค
-# ครีบ : ผิวสกปรก
-# ครีบ : ฉีกขาด
-# ชุดแขวนคาปา (Hanger) ชำรุด
-# ชุด interrupt : ชำรุด
-# จุดต่อ terminal : หลวม,หลุด
-# จุดต่อ terminal : เป็นสนิม
-# จุดต่อ terminal : รอยอาร์ค
-# ไม้แป้น : ชำรุด
-# จุดต่อOHGW/OPGW : หลวม,หลุด
-# จุดต่อOHGW/OPGW : เปลี่ยนสี
-# จุดต่อOHGW/OPGW : รอยอาร์ค
-# จุดต่อOHGW/OPGW : เป็นสนิม
-# จุดต่อที่ GROUND PLATE : หลวม,หลุด
-# จุดต่อ terminal clamp/pad : รอยอาร์ค
-# ชุดตัดอาร์ค หนวดกุ้ง : ชำรุด
-# ชุดดับอาร์ค : ชำรุด
-# อื่่นๆ
 
         
         #อุปกรณ์ที่1
