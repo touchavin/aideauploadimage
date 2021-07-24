@@ -116,8 +116,6 @@ def aidea(request): #หน้า aidea.html
                 eq_name = "CV"
             
             
-
-
             # ชนิดอุปกรณ์
                 #ชุดแรงดันที่ รหัสไม่ตรงกัน
             if  vol_name == "22KV" and subeq_name == "t-clamp (แคล้มป์มือเสือ)":
