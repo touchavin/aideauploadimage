@@ -47,7 +47,7 @@ def aidea(request): #หน้า aidea.html
         abnor_other = request.POST['other']
         f_image = request.FILES['image']
 
-        # abnor_name = "สภาพปกติ,บิ่นแตก"
+        abnor_name = "อื่นๆ"
 
          # checklist nodata 
         if  job_officerid == "":
@@ -74,7 +74,8 @@ def aidea(request): #หน้า aidea.html
         print(abnor_name)
         
         # กรณี 1สาเหตุ
-        if abnor_name =="สภาพปกติ" or abnor_name =="บิ่น,แตก":
+        if abnor_name =="สภาพปกติ" or abnor_name =="บิ่น,แตก" or abnor_name =="ฉีกขาด" or abnor_name =="บิดงอ,เสียรูป" or abnor_name =="เป็นสนิม" or abnor_name =="เปลี่ยนสี" or abnor_name =="รอยอาร์ค" or abnor_name =="ผิวสกปรก" or abnor_name =="หลวม,หลุด" or abnor_name =="ก้านเป็นสนิม" or abnor_name =="bolt/nut หลวม,หลุด" or abnor_name =="bolt/nut เปลี่ยนสี,เป็นสนิม" or abnor_name =="bond wire หลุด,ขาด" or abnor_name =="จุดต่อที่OHGW : หลวม,หลุด" or abnor_name =="จุดต่อที่OHGW : เปลี่ยนสี" or abnor_name =="จุดต่อที่OHGW : รอยอาร์ค" or abnor_name =="จุดต่อที่OHGW : เป็นสนิม" or abnor_name =="จุดต่อที่หัวเสา : หลวม,หลุด" or abnor_name =="จุดต่อที่หัวเสา : เปลี่ยนสี" or abnor_name =="จุดต่อที่หัวเสา : รอยอาร์ค" or abnor_name =="จุดต่อที่หัวเสา : เป็นสนิม" or abnor_name =="สายขาด" or abnor_name =="รอยแตก,ขาด" or abnor_name =="หลุดจากลูกถ้วย" or abnor_name =="หลุดจากลูกถ้วย/สเปเซอร์" or abnor_name =="ลูกถ้วยซับพอร์ต : เป็นสนิม" or abnor_name =="ลูกถ้วยซับพอร์ต : หลวม,หลุด" or abnor_name =="ลูกถ้วยซับพอร์ต : บิ่น,แตก" or abnor_name =="ลูกถ้วยซับพอร์ต : เปลี่ยนสี" or abnor_name =="ลูกถ้วยซับพอร์ต : รอยอาร์ค" or abnor_name =="ลูกถ้วยซับพอร์ต : ผิวสกปรก" or abnor_name =="จุดต่อ terminal clamp/หางปลา : หลวม,หลุด" or abnor_name =="จุดต่อ terminal clamp/หางปลา : เป็นสนิม" or abnor_name =="จุดต่อ terminal clamp/หางปลา : รอยอาร์ค" or abnor_name =="ลูกถ้วย : บิ่น,แตก" or abnor_name =="ลูกถ้วย : เปลี่ยนสี" or abnor_name =="ลูกถ้วย : รอยอาร์ค" or abnor_name =="ลูกถ้วย : ผิวสกปรก" or abnor_name =="จุดต่อ terminal clamp : หลวม,หลุด" or abnor_name =="จุดต่อ terminal clamp : เป็นสนิม" or abnor_name =="จุดต่อ terminal clamp : รอยอาร์ค" or abnor_name =="Bracket : เป็นสนิม" or abnor_name =="Bracket : หลวม,หลุด" or abnor_name =="บุชชิ่ง : บิ่น,แตก" or abnor_name =="บุชชิ่ง : เปลี่ยนสี" or abnor_name =="บุชชิ่ง : รอยอาร์ค" or abnor_name =="บุชชิ่ง : ผิวสกปรก" or abnor_name =="บุชชิ่ง :  หลวม,หลุด" or abnor_name =="ตัวถัง : เป็นสนิม" or abnor_name =="ตัวถัง : น้ำมันรั่ว" or abnor_name =="สายลีด : หลวม,หลุด" or abnor_name =="สายต่อลงดิน : รอยอาร์ค" or abnor_name =="สายต่อลงดิน : หลวม,หลุด" or abnor_name =="ครีบ : บิ่น,แตก" or abnor_name =="ครีบ : เปลี่ยนสี" or abnor_name =="ครีบ : รอยอาร์ค" or abnor_name =="ครีบ : ผิวสกปรก" or abnor_name =="ครีบ : ฉีกขาด" or abnor_name =="ชุดแขวนคาปา (Hanger) ชำรุด" or abnor_name =="ชุด interrupt : ชำรุด" or abnor_name =="จุดต่อ terminal : หลวม,หลุด" or abnor_name =="จุดต่อ terminal : เป็นสนิม" or abnor_name =="จุดต่อ terminal : รอยอาร์ค" or abnor_name =="ไม้แป้น : ชำรุด" or abnor_name =="จุดต่อOHGW/OPGW : หลวม,หลุด" or abnor_name =="จุดต่อOHGW/OPGW : เปลี่ยนสี" or abnor_name =="จุดต่อOHGW/OPGW : รอยอาร์ค" or abnor_name =="จุดต่อOHGW/OPGW : เป็นสนิม" or abnor_name =="จุดต่อที่ GROUND PLATE : หลวม,หลุด" or abnor_name =="จุดต่อ terminal clamp/pad : รอยอาร์ค" or abnor_name =="ชุดตัดอาร์ค หนวดกุ้ง : ชำรุด" or abnor_name =="ชุดดับอาร์ค : ชำรุด" or abnor_name =="อื่นๆ":
+                 
             # ระดับแรงดัน 22KV,33KV,115KV
             if  vol_name == "22KV":
                 vol_name = "DA"
