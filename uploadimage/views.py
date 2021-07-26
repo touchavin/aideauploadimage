@@ -47,7 +47,7 @@ def aidea(request): #หน้า aidea.html
         abnor_other = request.POST['other']
         f_image = request.FILES['image']
 
-        abnor_name = "บิดงอ,เสียรูป,อื่่นๆ"
+        # abnor_name = "บิดงอ,เสียรูป,อื่่นๆ"
 
          # checklist nodata 
         if  job_officerid == "":
@@ -1467,7 +1467,7 @@ def good(request): #หน้า bad
 
         
         abnor_name ="" 
-       #115KV สายดิน
+        #115KV สายดิน
         if  Circuit == "115KV" and subeq_name == "สายดิน" and abnor_name =="":
             subeq_name = "GR"
             abnor_name ="GR10"
@@ -1484,9 +1484,7 @@ def good(request): #หน้า bad
             subeq_name = "DS"
             abnor_name ="DS10"
 
-
-
-
+            
         #33KV สายดิน
         if  Circuit == "33KV" and subeq_name == "สายดิน" and abnor_name =="":
             subeq_name = "GR"
