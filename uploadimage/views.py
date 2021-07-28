@@ -23,9 +23,6 @@ from rest_framework.status import (
 
 from base64 import b64decode
 
-
-
-
 import json
 import requests
 
@@ -43,11 +40,12 @@ def aidea(request): #หน้า aidea.html
         # ประเภทอุปกรณ์
         subeq_name = request.POST['topic']
         # สาเหตุการชำรุด
-        abnor_name = request.POST['chapter']
+        abnor_name = request.POST['chapter[]']
+        # abnor_name = request.POST.getlist['chapter[]']
         abnor_other = request.POST['other']
         f_image = request.FILES['image']
 
-        # abnor_name = "บิดงอ,เสียรูป,อื่่นๆ"
+        # abnor_name = "บิ่น,แตก,บิดงอ,เสียรูป"
 
          # checklist nodata 
         if  job_officerid == "":
@@ -448,13 +446,15 @@ def aidea(request): #หน้า aidea.html
                 
             context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
             ## save ข้อมูลลง ฐานข้อมูล 
-        
 
+
+
+            
 
 # --------------------------------------------------------------------------------------------------------------------------
 
         # อุปกรณ์ที่ 1 หลายสาเหตุ เสา
-        if  vol_name == "22KV" and eq_name == "เสา" and subeq_name == "เสาคอนกรีต" and abnor_name =="บิ่น,แตก,บิดงอ,เสียรูป":
+        if  vol_name == "22KV" and eq_name == "เสา" and subeq_name == "เสาคอนกรีต" and abnor_name =="บิ่น,แตก, บิดงอ,เสียรูป":
             vol_name = "DA"
             eq_name = "PO"
             subeq_name = "0A"
@@ -498,607 +498,643 @@ def aidea(request): #หน้า aidea.html
             nameimagenew = f_image.name
             ## save ข้อมูลลง ฐานข้อมูล 
                 
-            img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
+            img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture, image = f_image)
             img.save()
                 
             context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
             ## save ข้อมูลลง ฐานข้อมูล 
-
-            pathimage = "/media/{}".format(f_image.name) 
+            
             vol_name = "DA"
             eq_name = "PO"
             subeq_name = "0A"
             abnor_name ="04"
 
-            img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
+            filename = request.FILES['image'].name
+            f = os.path.splitext(filename)
+            n = f[0]
+            ext = f[1]
+            #timedate & time in Python
+
+            timestr = time.strftime("%Y%m%d-%H%M%S")
+
+
+            f_image.name = "{}_{}_{}_{}_{}_{}{}".format(job_officerid, vol_name, eq_name, subeq_name, abnor_name, timestr, ext)
+            print(f_image.name)
+
+
+            #past image
+            pathimage = "/media/{}".format(f_image.name) 
+            print(pathimage)
+
+
+            # UP image cload
+            uploaded_file = request.FILES['image']
+            print(uploaded_file)
+            payload=uploaded_file
+            headers = {
+            'Content-Type': 'image/jpg'
+            }
+            path_file = f_image.name
+
+            url = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/" + path_file
+
+
+            response = requests.request("PUT", url, headers=headers, data=payload)
+
+            job_picture = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/{}".format(f_image.name)
+
+            nameimageold = filename
+            nameimagenew = f_image.name
+            ## save ข้อมูลลง ฐานข้อมูล 
+                
+            img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture, image = f_image)
             img.save()
                 
             context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
-                ## save ข้อมูลลง ฐานข้อมูล 
+            ## save ข้อมูลลง ฐานข้อมูล 
+        
+#         if  vol_name == "22KV" and eq_name == "เสา" and subeq_name == "เสาคอนกรีต" and abnor_name =="บิ่น,แตก,อื่่นๆ":
+#             vol_name = "DA"
+#             eq_name = "PO"
+#             subeq_name = "0A"
+#             abnor_name ="73"
+            
+
+#             filename = request.FILES['image'].name
+#             f = os.path.splitext(filename)
+#             n = f[0]
+#             ext = f[1]
+#             #timedate & time in Python
+
+#             timestr = time.strftime("%Y%m%d-%H%M%S")
+
+
+#             f_image.name = "{}_{}_{}_{}_{}_{}{}".format(job_officerid, vol_name, eq_name, subeq_name, abnor_name, timestr, ext)
+#             print(f_image.name)
+
+
+#             #past image
+#             pathimage = "/media/{}".format(f_image.name) 
+#             print(pathimage)
+
+
+#             # UP image cload
+#             uploaded_file = request.FILES['image']
+#             print(uploaded_file)
+#             payload=uploaded_file
+#             headers = {
+#             'Content-Type': 'image/jpg'
+#             }
+#             path_file = f_image.name
+
+#             url = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/" + path_file
+
+
+#             response = requests.request("PUT", url, headers=headers, data=payload)
+
+#             job_picture = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/{}".format(f_image.name)
+
+#             nameimageold = filename
+#             nameimagenew = f_image.name
+#                 ## save ข้อมูลลง ฐานข้อมูล 
+                
+#             img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
+#             img.save()
+                
+#             context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
+#             ## save ข้อมูลลง ฐานข้อมูล 
+
+#             pathimage = "/media/{}".format(f_image.name) 
+#             vol_name = "DA"
+#             eq_name = "PO"
+#             subeq_name = "0A"
+#             abnor_name ="02"
+#             abnor_other = "-"
+
+#             img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
+#             img.save()
+                
+#             context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
+#             ## save ข้อมูลลง ฐานข้อมูล 
+
+
+
+
+#         if  vol_name == "22KV" and eq_name == "เสา" and subeq_name == "เสาคอนกรีต" and abnor_name =="บิดงอ,เสียรูป,อื่่นๆ":
+#             vol_name = "DA"
+#             eq_name = "PO"
+#             subeq_name = "0A"
+#             abnor_name ="73"
+            
+
+#             filename = request.FILES['image'].name
+#             f = os.path.splitext(filename)
+#             n = f[0]
+#             ext = f[1]
+#             #timedate & time in Python
+
+#             timestr = time.strftime("%Y%m%d-%H%M%S")
+
+
+#             f_image.name = "{}_{}_{}_{}_{}_{}{}".format(job_officerid, vol_name, eq_name, subeq_name, abnor_name, timestr, ext)
+#             print(f_image.name)
+
+
+#             #past image
+#             pathimage = "/media/{}".format(f_image.name) 
+#             print(pathimage)
+
+
+#             # UP image cload
+#             uploaded_file = request.FILES['image']
+#             print(uploaded_file)
+#             payload=uploaded_file
+#             headers = {
+#             'Content-Type': 'image/jpg'
+#             }
+#             path_file = f_image.name
+
+#             url = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/" + path_file
+
+
+#             response = requests.request("PUT", url, headers=headers, data=payload)
+
+#             job_picture = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/{}".format(f_image.name)
+
+#             nameimageold = filename
+#             nameimagenew = f_image.name
+#                 ## save ข้อมูลลง ฐานข้อมูล 
+                
+#             img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
+#             img.save()
+                
+#             context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
+#             ## save ข้อมูลลง ฐานข้อมูล 
+
+#             pathimage = "/media/{}".format(f_image.name) 
+#             vol_name = "DA"
+#             eq_name = "PO"
+#             subeq_name = "0A"
+#             abnor_name ="04"
+#             abnor_other = "-"
+
+#             img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
+#             img.save()
+                
+#             context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
+#             ## save ข้อมูลลง ฐานข้อมูล 
+
+
+
+# # ----------------------------------------------------------------
+
+# # อุปกรณ์ที่ 1 หลายสาเหตุ เสาโครงเหล็ก
+#         if  vol_name == "22KV" and eq_name == "เสา" and subeq_name == "เสาโครงเหล็ก" and abnor_name =="บิ่น,แตก,บิดงอ,เสียรูป":
+#             vol_name = "DA"
+#             eq_name = "PO"
+#             subeq_name = "1A"
+#             abnor_name ="02"
+
+#             filename = request.FILES['image'].name
+#             f = os.path.splitext(filename)
+#             n = f[0]
+#             ext = f[1]
+#             #timedate & time in Python
+
+#             timestr = time.strftime("%Y%m%d-%H%M%S")
+
+
+#             f_image.name = "{}_{}_{}_{}_{}_{}{}".format(job_officerid, vol_name, eq_name, subeq_name, abnor_name, timestr, ext)
+#             print(f_image.name)
+
+
+#             #past image
+#             pathimage = "/media/{}".format(f_image.name) 
+#             print(pathimage)
+
+
+#             # UP image cload
+#             uploaded_file = request.FILES['image']
+#             print(uploaded_file)
+#             payload=uploaded_file
+#             headers = {
+#             'Content-Type': 'image/jpg'
+#             }
+#             path_file = f_image.name
+
+#             url = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/" + path_file
+
+
+#             response = requests.request("PUT", url, headers=headers, data=payload)
+
+#             job_picture = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/{}".format(f_image.name)
+
+#             nameimageold = filename
+#             nameimagenew = f_image.name
+#             ## save ข้อมูลลง ฐานข้อมูล 
+                
+#             img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
+#             img.save()
+                
+#             context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
+#             ## save ข้อมูลลง ฐานข้อมูล 
+
+#             pathimage = "/media/{}".format(f_image.name) 
+#             vol_name = "DA"
+#             eq_name = "PO"
+#             subeq_name = "1A"
+#             abnor_name ="04"
+
+#             img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
+#             img.save()
+                
+#             context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
+#                 ## save ข้อมูลลง ฐานข้อมูล 
             
         
-        if  vol_name == "22KV" and eq_name == "เสา" and subeq_name == "เสาคอนกรีต" and abnor_name =="บิ่น,แตก,อื่่นๆ":
-            vol_name = "DA"
-            eq_name = "PO"
-            subeq_name = "0A"
-            abnor_name ="73"
+#         if  vol_name == "22KV" and eq_name == "เสา" and subeq_name == "เสาโครงเหล็ก" and abnor_name =="บิ่น,แตก,อื่่นๆ":
+#             vol_name = "DA"
+#             eq_name = "PO"
+#             subeq_name = "1A"
+#             abnor_name ="73"
             
 
-            filename = request.FILES['image'].name
-            f = os.path.splitext(filename)
-            n = f[0]
-            ext = f[1]
-            #timedate & time in Python
+#             filename = request.FILES['image'].name
+#             f = os.path.splitext(filename)
+#             n = f[0]
+#             ext = f[1]
+#             #timedate & time in Python
 
-            timestr = time.strftime("%Y%m%d-%H%M%S")
-
-
-            f_image.name = "{}_{}_{}_{}_{}_{}{}".format(job_officerid, vol_name, eq_name, subeq_name, abnor_name, timestr, ext)
-            print(f_image.name)
+#             timestr = time.strftime("%Y%m%d-%H%M%S")
 
 
-            #past image
-            pathimage = "/media/{}".format(f_image.name) 
-            print(pathimage)
+#             f_image.name = "{}_{}_{}_{}_{}_{}{}".format(job_officerid, vol_name, eq_name, subeq_name, abnor_name, timestr, ext)
+#             print(f_image.name)
 
 
-            # UP image cload
-            uploaded_file = request.FILES['image']
-            print(uploaded_file)
-            payload=uploaded_file
-            headers = {
-            'Content-Type': 'image/jpg'
-            }
-            path_file = f_image.name
-
-            url = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/" + path_file
+#             #past image
+#             pathimage = "/media/{}".format(f_image.name) 
+#             print(pathimage)
 
 
-            response = requests.request("PUT", url, headers=headers, data=payload)
+#             # UP image cload
+#             uploaded_file = request.FILES['image']
+#             print(uploaded_file)
+#             payload=uploaded_file
+#             headers = {
+#             'Content-Type': 'image/jpg'
+#             }
+#             path_file = f_image.name
 
-            job_picture = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/{}".format(f_image.name)
+#             url = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/" + path_file
 
-            nameimageold = filename
-            nameimagenew = f_image.name
-                ## save ข้อมูลลง ฐานข้อมูล 
+
+#             response = requests.request("PUT", url, headers=headers, data=payload)
+
+#             job_picture = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/{}".format(f_image.name)
+
+#             nameimageold = filename
+#             nameimagenew = f_image.name
+#                 ## save ข้อมูลลง ฐานข้อมูล 
                 
-            img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
-            img.save()
+#             img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
+#             img.save()
                 
-            context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
-            ## save ข้อมูลลง ฐานข้อมูล 
+#             context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
+#             ## save ข้อมูลลง ฐานข้อมูล 
 
-            pathimage = "/media/{}".format(f_image.name) 
-            vol_name = "DA"
-            eq_name = "PO"
-            subeq_name = "0A"
-            abnor_name ="02"
-            abnor_other = "-"
+#             pathimage = "/media/{}".format(f_image.name) 
+#             vol_name = "DA"
+#             eq_name = "PO"
+#             subeq_name = "1A"
+#             abnor_name ="02"
+#             abnor_other = "-"
 
-            img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
-            img.save()
+#             img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
+#             img.save()
                 
-            context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
-            ## save ข้อมูลลง ฐานข้อมูล 
+#             context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
+#             ## save ข้อมูลลง ฐานข้อมูล 
 
 
-
-
-        if  vol_name == "22KV" and eq_name == "เสา" and subeq_name == "เสาคอนกรีต" and abnor_name =="บิดงอ,เสียรูป,อื่่นๆ":
-            vol_name = "DA"
-            eq_name = "PO"
-            subeq_name = "0A"
-            abnor_name ="73"
+#         if  vol_name == "22KV" and eq_name == "เสา" and subeq_name == "เสาโครงเหล็ก" and abnor_name =="บิดงอ,เสียรูป,อื่่นๆ":
+#             vol_name = "DA"
+#             eq_name = "PO"
+#             subeq_name = "1A"
+#             abnor_name ="73"
             
 
-            filename = request.FILES['image'].name
-            f = os.path.splitext(filename)
-            n = f[0]
-            ext = f[1]
-            #timedate & time in Python
+#             filename = request.FILES['image'].name
+#             f = os.path.splitext(filename)
+#             n = f[0]
+#             ext = f[1]
+#             #timedate & time in Python
 
-            timestr = time.strftime("%Y%m%d-%H%M%S")
-
-
-            f_image.name = "{}_{}_{}_{}_{}_{}{}".format(job_officerid, vol_name, eq_name, subeq_name, abnor_name, timestr, ext)
-            print(f_image.name)
+#             timestr = time.strftime("%Y%m%d-%H%M%S")
 
 
-            #past image
-            pathimage = "/media/{}".format(f_image.name) 
-            print(pathimage)
+#             f_image.name = "{}_{}_{}_{}_{}_{}{}".format(job_officerid, vol_name, eq_name, subeq_name, abnor_name, timestr, ext)
+#             print(f_image.name)
 
 
-            # UP image cload
-            uploaded_file = request.FILES['image']
-            print(uploaded_file)
-            payload=uploaded_file
-            headers = {
-            'Content-Type': 'image/jpg'
-            }
-            path_file = f_image.name
-
-            url = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/" + path_file
+#             #past image
+#             pathimage = "/media/{}".format(f_image.name) 
+#             print(pathimage)
 
 
-            response = requests.request("PUT", url, headers=headers, data=payload)
+#             # UP image cload
+#             uploaded_file = request.FILES['image']
+#             print(uploaded_file)
+#             payload=uploaded_file
+#             headers = {
+#             'Content-Type': 'image/jpg'
+#             }
+#             path_file = f_image.name
 
-            job_picture = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/{}".format(f_image.name)
+#             url = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/" + path_file
 
-            nameimageold = filename
-            nameimagenew = f_image.name
-                ## save ข้อมูลลง ฐานข้อมูล 
+
+#             response = requests.request("PUT", url, headers=headers, data=payload)
+
+#             job_picture = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/{}".format(f_image.name)
+
+#             nameimageold = filename
+#             nameimagenew = f_image.name
+#                 ## save ข้อมูลลง ฐานข้อมูล 
                 
-            img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
-            img.save()
+#             img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
+#             img.save()
                 
-            context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
-            ## save ข้อมูลลง ฐานข้อมูล 
+#             context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
+#             ## save ข้อมูลลง ฐานข้อมูล 
 
-            pathimage = "/media/{}".format(f_image.name) 
-            vol_name = "DA"
-            eq_name = "PO"
-            subeq_name = "0A"
-            abnor_name ="04"
-            abnor_other = "-"
+#             pathimage = "/media/{}".format(f_image.name) 
+#             vol_name = "DA"
+#             eq_name = "PO"
+#             subeq_name = "1A"
+#             abnor_name ="04"
+#             abnor_other = "-"
 
-            img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
-            img.save()
+#             img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
+#             img.save()
                 
-            context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
-            ## save ข้อมูลลง ฐานข้อมูล 
+#             context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
+#             ## save ข้อมูลลง ฐานข้อมูล 
 
 
 
-# ----------------------------------------------------------------
+# # ----------------------------------------------------------------
 
-# อุปกรณ์ที่ 1 หลายสาเหตุ เสาโครงเหล็ก
-        if  vol_name == "22KV" and eq_name == "เสา" and subeq_name == "เสาโครงเหล็ก" and abnor_name =="บิ่น,แตก,บิดงอ,เสียรูป":
-            vol_name = "DA"
-            eq_name = "PO"
-            subeq_name = "1A"
-            abnor_name ="02"
+# # อุปกรณ์ที่ 1 หลายสาเหตุ คอนคอนกรีต
+#         if  vol_name == "22KV" and eq_name == "เสา" and subeq_name == "คอนคอนกรีต" and abnor_name =="บิ่น,แตก,บิดงอ,เสียรูป":
+#             vol_name = "DA"
+#             eq_name = "PO"
+#             subeq_name = "2A"
+#             abnor_name ="02"
 
-            filename = request.FILES['image'].name
-            f = os.path.splitext(filename)
-            n = f[0]
-            ext = f[1]
-            #timedate & time in Python
+#             filename = request.FILES['image'].name
+#             f = os.path.splitext(filename)
+#             n = f[0]
+#             ext = f[1]
+#             #timedate & time in Python
 
-            timestr = time.strftime("%Y%m%d-%H%M%S")
-
-
-            f_image.name = "{}_{}_{}_{}_{}_{}{}".format(job_officerid, vol_name, eq_name, subeq_name, abnor_name, timestr, ext)
-            print(f_image.name)
+#             timestr = time.strftime("%Y%m%d-%H%M%S")
 
 
-            #past image
-            pathimage = "/media/{}".format(f_image.name) 
-            print(pathimage)
+#             f_image.name = "{}_{}_{}_{}_{}_{}{}".format(job_officerid, vol_name, eq_name, subeq_name, abnor_name, timestr, ext)
+#             print(f_image.name)
 
 
-            # UP image cload
-            uploaded_file = request.FILES['image']
-            print(uploaded_file)
-            payload=uploaded_file
-            headers = {
-            'Content-Type': 'image/jpg'
-            }
-            path_file = f_image.name
-
-            url = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/" + path_file
+#             #past image
+#             pathimage = "/media/{}".format(f_image.name) 
+#             print(pathimage)
 
 
-            response = requests.request("PUT", url, headers=headers, data=payload)
+#             # UP image cload
+#             uploaded_file = request.FILES['image']
+#             print(uploaded_file)
+#             payload=uploaded_file
+#             headers = {
+#             'Content-Type': 'image/jpg'
+#             }
+#             path_file = f_image.name
 
-            job_picture = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/{}".format(f_image.name)
+#             url = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/" + path_file
 
-            nameimageold = filename
-            nameimagenew = f_image.name
-            ## save ข้อมูลลง ฐานข้อมูล 
+
+#             response = requests.request("PUT", url, headers=headers, data=payload)
+
+#             job_picture = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/{}".format(f_image.name)
+
+#             nameimageold = filename
+#             nameimagenew = f_image.name
+#             ## save ข้อมูลลง ฐานข้อมูล 
                 
-            img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
-            img.save()
+#             img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
+#             img.save()
                 
-            context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
-            ## save ข้อมูลลง ฐานข้อมูล 
+#             context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
+#             ## save ข้อมูลลง ฐานข้อมูล 
 
-            pathimage = "/media/{}".format(f_image.name) 
-            vol_name = "DA"
-            eq_name = "PO"
-            subeq_name = "1A"
-            abnor_name ="04"
+#             pathimage = "/media/{}".format(f_image.name) 
+#             vol_name = "DA"
+#             eq_name = "PO"
+#             subeq_name = "2A"
+#             abnor_name ="04"
 
-            img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
-            img.save()
+#             img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
+#             img.save()
                 
-            context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
-                ## save ข้อมูลลง ฐานข้อมูล 
+#             context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
+#                 ## save ข้อมูลลง ฐานข้อมูล 
+
+#         if  vol_name == "22KV" and eq_name == "เสา" and subeq_name == "คอนคอนกรีต" and abnor_name =="บิ่น,แตก,bolt/nut หลวม,หลุด":
+#             vol_name = "DA"
+#             eq_name = "PO"
+#             subeq_name = "2A"
+#             abnor_name ="02"
+
+#             filename = request.FILES['image'].name
+#             f = os.path.splitext(filename)
+#             n = f[0]
+#             ext = f[1]
+#             #timedate & time in Python
+
+#             timestr = time.strftime("%Y%m%d-%H%M%S")
+
+
+#             f_image.name = "{}_{}_{}_{}_{}_{}{}".format(job_officerid, vol_name, eq_name, subeq_name, abnor_name, timestr, ext)
+#             print(f_image.name)
+
+
+#             #past image
+#             pathimage = "/media/{}".format(f_image.name) 
+#             print(pathimage)
+
+
+#             # UP image cload
+#             uploaded_file = request.FILES['image']
+#             print(uploaded_file)
+#             payload=uploaded_file
+#             headers = {
+#             'Content-Type': 'image/jpg'
+#             }
+#             path_file = f_image.name
+
+#             url = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/" + path_file
+
+
+#             response = requests.request("PUT", url, headers=headers, data=payload)
+
+#             job_picture = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/{}".format(f_image.name)
+
+#             nameimageold = filename
+#             nameimagenew = f_image.name
+#             ## save ข้อมูลลง ฐานข้อมูล 
+                
+#             img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
+#             img.save()
+                
+#             context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
+#             ## save ข้อมูลลง ฐานข้อมูล 
+
+#             pathimage = "/media/{}".format(f_image.name) 
+#             vol_name = "DA"
+#             eq_name = "PO"
+#             subeq_name = "2A"
+#             abnor_name ="11"
+
+#             img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
+#             img.save()
+                
+#             context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
+#             ## save ข้อมูลลง ฐานข้อมูล           
+
+#         if  vol_name == "22KV" and eq_name == "เสา" and subeq_name == "คอนคอนกรีต" and abnor_name =="บิ่น,แตก,bolt/nut เปลี่ยนสี,เป็นสนิม":
+#             vol_name = "DA"
+#             eq_name = "PO"
+#             subeq_name = "2A"
+#             abnor_name ="02"
+
+#             filename = request.FILES['image'].name
+#             f = os.path.splitext(filename)
+#             n = f[0]
+#             ext = f[1]
+#             #timedate & time in Python
+
+#             timestr = time.strftime("%Y%m%d-%H%M%S")
+
+
+#             f_image.name = "{}_{}_{}_{}_{}_{}{}".format(job_officerid, vol_name, eq_name, subeq_name, abnor_name, timestr, ext)
+#             print(f_image.name)
+
+
+#             #past image
+#             pathimage = "/media/{}".format(f_image.name) 
+#             print(pathimage)
+
+
+#             # UP image cload
+#             uploaded_file = request.FILES['image']
+#             print(uploaded_file)
+#             payload=uploaded_file
+#             headers = {
+#             'Content-Type': 'image/jpg'
+#             }
+#             path_file = f_image.name
+
+#             url = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/" + path_file
+
+
+#             response = requests.request("PUT", url, headers=headers, data=payload)
+
+#             job_picture = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/{}".format(f_image.name)
+
+#             nameimageold = filename
+#             nameimagenew = f_image.name
+#             ## save ข้อมูลลง ฐานข้อมูล 
+                
+#             img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
+#             img.save()
+                
+#             context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
+#             ## save ข้อมูลลง ฐานข้อมูล 
+
+#             pathimage = "/media/{}".format(f_image.name) 
+#             vol_name = "DA"
+#             eq_name = "PO"
+#             subeq_name = "2A"
+#             abnor_name ="12"
+
+#             img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
+#             img.save()
+                
+#             context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
+#             ## save ข้อมูลลง ฐานข้อมูล           
+
+
+#         if  vol_name == "22KV" and eq_name == "เสา" and subeq_name == "คอนคอนกรีต" and abnor_name =="บิ่น,แตก,bond wire หลุด,ขาด":
+#             vol_name = "DA"
+#             eq_name = "PO"
+#             subeq_name = "2A"
+#             abnor_name ="02"
+
+#             filename = request.FILES['image'].name
+#             f = os.path.splitext(filename)
+#             n = f[0]
+#             ext = f[1]
+#             #timedate & time in Python
+
+#             timestr = time.strftime("%Y%m%d-%H%M%S")
+
+
+#             f_image.name = "{}_{}_{}_{}_{}_{}{}".format(job_officerid, vol_name, eq_name, subeq_name, abnor_name, timestr, ext)
+#             print(f_image.name)
+
+
+#             #past image
+#             pathimage = "/media/{}".format(f_image.name) 
+#             print(pathimage)
+
+
+#             # UP image cload
+#             uploaded_file = request.FILES['image']
+#             print(uploaded_file)
+#             payload=uploaded_file
+#             headers = {
+#             'Content-Type': 'image/jpg'
+#             }
+#             path_file = f_image.name
+
+#             url = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/" + path_file
+
+
+#             response = requests.request("PUT", url, headers=headers, data=payload)
+
+#             job_picture = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/{}".format(f_image.name)
+
+#             nameimageold = filename
+#             nameimagenew = f_image.name
+#             ## save ข้อมูลลง ฐานข้อมูล 
+                
+#             img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
+#             img.save()
+                
+#             context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
+#             ## save ข้อมูลลง ฐานข้อมูล 
+
+#             pathimage = "/media/{}".format(f_image.name) 
+#             vol_name = "DA"
+#             eq_name = "PO"
+#             subeq_name = "2A"
+#             abnor_name ="13"
+
+#             img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
+#             img.save()
+                
+#             context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
             
-        
-        if  vol_name == "22KV" and eq_name == "เสา" and subeq_name == "เสาโครงเหล็ก" and abnor_name =="บิ่น,แตก,อื่่นๆ":
-            vol_name = "DA"
-            eq_name = "PO"
-            subeq_name = "1A"
-            abnor_name ="73"
-            
-
-            filename = request.FILES['image'].name
-            f = os.path.splitext(filename)
-            n = f[0]
-            ext = f[1]
-            #timedate & time in Python
-
-            timestr = time.strftime("%Y%m%d-%H%M%S")
-
-
-            f_image.name = "{}_{}_{}_{}_{}_{}{}".format(job_officerid, vol_name, eq_name, subeq_name, abnor_name, timestr, ext)
-            print(f_image.name)
-
-
-            #past image
-            pathimage = "/media/{}".format(f_image.name) 
-            print(pathimage)
-
-
-            # UP image cload
-            uploaded_file = request.FILES['image']
-            print(uploaded_file)
-            payload=uploaded_file
-            headers = {
-            'Content-Type': 'image/jpg'
-            }
-            path_file = f_image.name
-
-            url = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/" + path_file
-
-
-            response = requests.request("PUT", url, headers=headers, data=payload)
-
-            job_picture = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/{}".format(f_image.name)
-
-            nameimageold = filename
-            nameimagenew = f_image.name
-                ## save ข้อมูลลง ฐานข้อมูล 
-                
-            img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
-            img.save()
-                
-            context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
-            ## save ข้อมูลลง ฐานข้อมูล 
-
-            pathimage = "/media/{}".format(f_image.name) 
-            vol_name = "DA"
-            eq_name = "PO"
-            subeq_name = "1A"
-            abnor_name ="02"
-            abnor_other = "-"
-
-            img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
-            img.save()
-                
-            context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
-            ## save ข้อมูลลง ฐานข้อมูล 
-
-
-        if  vol_name == "22KV" and eq_name == "เสา" and subeq_name == "เสาโครงเหล็ก" and abnor_name =="บิดงอ,เสียรูป,อื่่นๆ":
-            vol_name = "DA"
-            eq_name = "PO"
-            subeq_name = "1A"
-            abnor_name ="73"
-            
-
-            filename = request.FILES['image'].name
-            f = os.path.splitext(filename)
-            n = f[0]
-            ext = f[1]
-            #timedate & time in Python
-
-            timestr = time.strftime("%Y%m%d-%H%M%S")
-
-
-            f_image.name = "{}_{}_{}_{}_{}_{}{}".format(job_officerid, vol_name, eq_name, subeq_name, abnor_name, timestr, ext)
-            print(f_image.name)
-
-
-            #past image
-            pathimage = "/media/{}".format(f_image.name) 
-            print(pathimage)
-
-
-            # UP image cload
-            uploaded_file = request.FILES['image']
-            print(uploaded_file)
-            payload=uploaded_file
-            headers = {
-            'Content-Type': 'image/jpg'
-            }
-            path_file = f_image.name
-
-            url = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/" + path_file
-
-
-            response = requests.request("PUT", url, headers=headers, data=payload)
-
-            job_picture = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/{}".format(f_image.name)
-
-            nameimageold = filename
-            nameimagenew = f_image.name
-                ## save ข้อมูลลง ฐานข้อมูล 
-                
-            img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
-            img.save()
-                
-            context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
-            ## save ข้อมูลลง ฐานข้อมูล 
-
-            pathimage = "/media/{}".format(f_image.name) 
-            vol_name = "DA"
-            eq_name = "PO"
-            subeq_name = "1A"
-            abnor_name ="04"
-            abnor_other = "-"
-
-            img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
-            img.save()
-                
-            context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
-            ## save ข้อมูลลง ฐานข้อมูล 
-
-
-
-# ----------------------------------------------------------------
-
-# อุปกรณ์ที่ 1 หลายสาเหตุ คอนคอนกรีต
-        if  vol_name == "22KV" and eq_name == "เสา" and subeq_name == "คอนคอนกรีต" and abnor_name =="บิ่น,แตก,บิดงอ,เสียรูป":
-            vol_name = "DA"
-            eq_name = "PO"
-            subeq_name = "2A"
-            abnor_name ="02"
-
-            filename = request.FILES['image'].name
-            f = os.path.splitext(filename)
-            n = f[0]
-            ext = f[1]
-            #timedate & time in Python
-
-            timestr = time.strftime("%Y%m%d-%H%M%S")
-
-
-            f_image.name = "{}_{}_{}_{}_{}_{}{}".format(job_officerid, vol_name, eq_name, subeq_name, abnor_name, timestr, ext)
-            print(f_image.name)
-
-
-            #past image
-            pathimage = "/media/{}".format(f_image.name) 
-            print(pathimage)
-
-
-            # UP image cload
-            uploaded_file = request.FILES['image']
-            print(uploaded_file)
-            payload=uploaded_file
-            headers = {
-            'Content-Type': 'image/jpg'
-            }
-            path_file = f_image.name
-
-            url = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/" + path_file
-
-
-            response = requests.request("PUT", url, headers=headers, data=payload)
-
-            job_picture = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/{}".format(f_image.name)
-
-            nameimageold = filename
-            nameimagenew = f_image.name
-            ## save ข้อมูลลง ฐานข้อมูล 
-                
-            img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
-            img.save()
-                
-            context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
-            ## save ข้อมูลลง ฐานข้อมูล 
-
-            pathimage = "/media/{}".format(f_image.name) 
-            vol_name = "DA"
-            eq_name = "PO"
-            subeq_name = "2A"
-            abnor_name ="04"
-
-            img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
-            img.save()
-                
-            context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
-                ## save ข้อมูลลง ฐานข้อมูล 
-
-        if  vol_name == "22KV" and eq_name == "เสา" and subeq_name == "คอนคอนกรีต" and abnor_name =="บิ่น,แตก,bolt/nut หลวม,หลุด":
-            vol_name = "DA"
-            eq_name = "PO"
-            subeq_name = "2A"
-            abnor_name ="02"
-
-            filename = request.FILES['image'].name
-            f = os.path.splitext(filename)
-            n = f[0]
-            ext = f[1]
-            #timedate & time in Python
-
-            timestr = time.strftime("%Y%m%d-%H%M%S")
-
-
-            f_image.name = "{}_{}_{}_{}_{}_{}{}".format(job_officerid, vol_name, eq_name, subeq_name, abnor_name, timestr, ext)
-            print(f_image.name)
-
-
-            #past image
-            pathimage = "/media/{}".format(f_image.name) 
-            print(pathimage)
-
-
-            # UP image cload
-            uploaded_file = request.FILES['image']
-            print(uploaded_file)
-            payload=uploaded_file
-            headers = {
-            'Content-Type': 'image/jpg'
-            }
-            path_file = f_image.name
-
-            url = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/" + path_file
-
-
-            response = requests.request("PUT", url, headers=headers, data=payload)
-
-            job_picture = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/{}".format(f_image.name)
-
-            nameimageold = filename
-            nameimagenew = f_image.name
-            ## save ข้อมูลลง ฐานข้อมูล 
-                
-            img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
-            img.save()
-                
-            context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
-            ## save ข้อมูลลง ฐานข้อมูล 
-
-            pathimage = "/media/{}".format(f_image.name) 
-            vol_name = "DA"
-            eq_name = "PO"
-            subeq_name = "2A"
-            abnor_name ="11"
-
-            img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
-            img.save()
-                
-            context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
-            ## save ข้อมูลลง ฐานข้อมูล           
-
-        if  vol_name == "22KV" and eq_name == "เสา" and subeq_name == "คอนคอนกรีต" and abnor_name =="บิ่น,แตก,bolt/nut เปลี่ยนสี,เป็นสนิม":
-            vol_name = "DA"
-            eq_name = "PO"
-            subeq_name = "2A"
-            abnor_name ="02"
-
-            filename = request.FILES['image'].name
-            f = os.path.splitext(filename)
-            n = f[0]
-            ext = f[1]
-            #timedate & time in Python
-
-            timestr = time.strftime("%Y%m%d-%H%M%S")
-
-
-            f_image.name = "{}_{}_{}_{}_{}_{}{}".format(job_officerid, vol_name, eq_name, subeq_name, abnor_name, timestr, ext)
-            print(f_image.name)
-
-
-            #past image
-            pathimage = "/media/{}".format(f_image.name) 
-            print(pathimage)
-
-
-            # UP image cload
-            uploaded_file = request.FILES['image']
-            print(uploaded_file)
-            payload=uploaded_file
-            headers = {
-            'Content-Type': 'image/jpg'
-            }
-            path_file = f_image.name
-
-            url = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/" + path_file
-
-
-            response = requests.request("PUT", url, headers=headers, data=payload)
-
-            job_picture = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/{}".format(f_image.name)
-
-            nameimageold = filename
-            nameimagenew = f_image.name
-            ## save ข้อมูลลง ฐานข้อมูล 
-                
-            img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
-            img.save()
-                
-            context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
-            ## save ข้อมูลลง ฐานข้อมูล 
-
-            pathimage = "/media/{}".format(f_image.name) 
-            vol_name = "DA"
-            eq_name = "PO"
-            subeq_name = "2A"
-            abnor_name ="12"
-
-            img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
-            img.save()
-                
-            context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
-            ## save ข้อมูลลง ฐานข้อมูล           
-
-
-        if  vol_name == "22KV" and eq_name == "เสา" and subeq_name == "คอนคอนกรีต" and abnor_name =="บิ่น,แตก,bond wire หลุด,ขาด":
-            vol_name = "DA"
-            eq_name = "PO"
-            subeq_name = "2A"
-            abnor_name ="02"
-
-            filename = request.FILES['image'].name
-            f = os.path.splitext(filename)
-            n = f[0]
-            ext = f[1]
-            #timedate & time in Python
-
-            timestr = time.strftime("%Y%m%d-%H%M%S")
-
-
-            f_image.name = "{}_{}_{}_{}_{}_{}{}".format(job_officerid, vol_name, eq_name, subeq_name, abnor_name, timestr, ext)
-            print(f_image.name)
-
-
-            #past image
-            pathimage = "/media/{}".format(f_image.name) 
-            print(pathimage)
-
-
-            # UP image cload
-            uploaded_file = request.FILES['image']
-            print(uploaded_file)
-            payload=uploaded_file
-            headers = {
-            'Content-Type': 'image/jpg'
-            }
-            path_file = f_image.name
-
-            url = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/" + path_file
-
-
-            response = requests.request("PUT", url, headers=headers, data=payload)
-
-            job_picture = "https://objectstorage.ap-tokyo-1.oraclecloud.com/p/dI47BfTpwxXJODPhiO1p2wmYqyL0M-6b4TqRxU1ETcPDVFSjOC9sjXxPi9W-NomC/n/peacloud/b/Aidea/o/{}".format(f_image.name)
-
-            nameimageold = filename
-            nameimagenew = f_image.name
-            ## save ข้อมูลลง ฐานข้อมูล 
-                
-            img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
-            img.save()
-                
-            context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
-            ## save ข้อมูลลง ฐานข้อมูล 
-
-            pathimage = "/media/{}".format(f_image.name) 
-            vol_name = "DA"
-            eq_name = "PO"
-            subeq_name = "2A"
-            abnor_name ="13"
-
-            img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture)
-            img.save()
-                
-            context={'data':{' job_officerid':job_officerid, 'eq_name':eq_name, 'subeq_name':subeq_name, 'abnor_name':abnor_name, 'vol_name':vol_name, 'pathimage':pathimage, 'job_picture':job_picture}}
-            
-            ## save ข้อมูลลง ฐานข้อมูล           
+#             ## save ข้อมูลลง ฐานข้อมูล           
             
 
 
