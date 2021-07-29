@@ -90,6 +90,7 @@
 
                     <div class="col-sm-10">
                         <select name="subject" id="subject" placeholder="ประเภทอุปกรณ์">
+                    <option value="ประเภทอุปกรณ์">ประเภทอุปกรณ์</option>       
                     <option value="เสา">เสา</option>
                     <option value="จุดต่อในระบบจำหน่าย">จุดต่อในระบบจำหน่าย</option>
                     <option value="3">March</option>
@@ -116,6 +117,7 @@
 
                         <div class="col-sm-10">
                             <select name="topic" id="topic" placeholder="ชนิดอุปกรณ์">
+                    <option value="ชนิดอุปกรณ์">ชนิดอุปกรณ์</option>
                     <option value="เสาคอนกรีต">เสาคอนกรีต</option>
                     <option value="t-clamp (แคล้มป์มือเสือ)">t-clamp (แคล้มป์มือเสือ)</option>
                     <option value="หางปลา">หางปลา </option>
@@ -155,36 +157,112 @@
                   </select>
                         </div>
                     </div>
-                    <script>
-                        $(function() {
-                            $('select').multipleSelect({
-                                showClear: true
+
+                    <div>
+                        <br>
+                        <label for="title">อื่นๆ</label>
+                        <input type="text" name="other" placeholder="อื่นๆ" />
+
+                    </div>
+
+
+
+                    <h3>อุปกรณ์ที่2</h3>
+                </div>
+
+
+                <style>
+                    select {
+                        width: 100%;
+                    }
+                </style>
+
+                <div>
+                    <div class="form-group row">
+                        <label class="col-sm-2">
+                            ประเภทอุปกรณ์
+                    </label>
+
+                        <div class="col-sm-10">
+                            <select name="subject2" id="subject2" placeholder="ประเภทอุปกรณ์">
+                        <option value="ประเภทอุปกรณ์">ประเภทอุปกรณ์</option>       
+                        <option value="เสา">เสา</option>
+                        <option value="จุดต่อในระบบจำหน่าย">จุดต่อในระบบจำหน่าย</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                      </select>
+                        </div>
+                    </div>
+
+
+
+                    <div>
+                        <div class="form-group row">
+                            <label class="col-sm-2">
+                                ชนิดอุปกรณ์
+                    </label>
+
+                            <div class="col-sm-10">
+                                <select name="topic2" id="topic2" placeholder="ชนิดอุปกรณ์">
+                        <option value="ชนิดอุปกรณ์">ชนิดอุปกรณ์</option>
+                        <option value="เสาคอนกรีต">เสาคอนกรีต</option>
+                        <option value="t-clamp (แคล้มป์มือเสือ)">t-clamp (แคล้มป์มือเสือ)</option>
+                        <option value="หางปลา">หางปลา </option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                      </select>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label class="col-sm-2">
+                    สาเหตุการชำรุด
+                    </label>
+
+                            <div class="col-sm-10">
+                                <select multiple="multiple" name="chapter2[]" id="chapter2" placeholder="สาเหตุการชำรุด">
+                        <option value="สภาพปกติ">สภาพปกติ</option>
+                        <option value="บิ่น,แตก">บิ่น,แตก</option>
+                        <option value="ฉีกขาด">ฉีกขาด</option>
+                        <option value="บิดงอ,เสียรูป">บิดงอ,เสียรูป</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                      </select>
+                            </div>
+                        </div>
+
+
+                        <script>
+                            $(function() {
+                                $('select').multipleSelect({
+                                    showClear: true
+                                })
                             })
-                        })
-                    </script>
-                    <script>
-                        function getValue() {
-                            var ele = []
-                            var bike = document.getElementById("checkbox1")
-                            if (bike.checked) {
-                                ele.push(bike.value);
-                            }
-                            var car = document.getElementById("checkbox2")
-                            if (car.checked) {
-                                ele.push(car.value);
-                            }
-                            var home = document.getElementById("checkbox3")
-                            if (home.checked) {
-                                ele.push(home.value);
-                            }
-                            if (ele.length > 0) {
-                                document.getElementById("p1").innerHTML = ele;
-                            } else {
-                                document.getElementById("p1").innerHTML = "You Dont have any thing";
-                            }
-                        }
-                    </script>
-                    <!-- 
+                        </script>
+
+                        <!-- 
                 <select name="subject" id="subject">
                     ประเภทอุปกรณ์<option value=" ">ประเภทอุปกรณ์</option>
                                 
@@ -200,15 +278,15 @@
                               </select>
             </div> -->
 
-                    <div>
-                        <br>
-                        <label for="title">อื่นๆ</label>
-                        <input type="text" name="other" placeholder="อื่นๆ" />
+                        <div>
+                            <br>
+                            <label for="title">อื่นๆ</label>
+                            <input type="text" name="other2" placeholder="อื่นๆ" />
 
-                    </div>
+                        </div>
 
 
-                    <!-- 
+                        <!-- 
 
 
             <h6>อุปกรณ์ที่2</h6>
@@ -227,14 +305,14 @@
 
 
 
-                    <br>
-                    <br>
-                    <input type="submit" id="btn_submit" value="อัพโหลดไฟล์รูปภาพ" onclick="getValue()" disabled>
+                        <br>
+                        <br>
+                        <input type="submit" id="btn_submit" value="อัพโหลดไฟล์รูปภาพ" onclick="getValue()" disabled>
+                    </div>
                 </div>
             </div>
-        </div>
-        </form>
-        </form>
+            </form>
+            </form>
     </form>
     <!-- Optional JavaScript; choose one of the two! -->
 
