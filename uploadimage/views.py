@@ -40,10 +40,23 @@ def aidea(request): #หน้า aidea.html
         # ประเภทอุปกรณ์
         subeq_name = request.POST['topic']
         # สาเหตุการชำรุด
-        abnor_name = request.POST['chapter[]']
-        # abnor_name = request.POST.getlist['chapter[]']
+        # abnor_name = request.POST['chapter[]']
+        abnor_name = request.POST.getlist('chapter[]')
         abnor_other = request.POST['other']
         f_image = request.FILES['image']
+
+        abnor_name = ",".join(abnor_name)
+        print(abnor_name)
+
+
+
+
+
+
+        # print('chapter[]')
+        # for i in abnor_name:
+        #     print(i)
+        #     abnor_name = i
 
         # abnor_name = "บิ่น,แตก,บิดงอ,เสียรูป"
 
@@ -454,7 +467,7 @@ def aidea(request): #หน้า aidea.html
 # --------------------------------------------------------------------------------------------------------------------------
 
         # อุปกรณ์ที่ 1 หลายสาเหตุ เสา
-        if  vol_name == "22KV" and eq_name == "เสา" and subeq_name == "เสาคอนกรีต" and abnor_name =="บิ่น,แตก, บิดงอ,เสียรูป":
+        if  vol_name == "22KV" and eq_name == "เสา" and subeq_name == "เสาคอนกรีต" and abnor_name =="บิ่น,แตก,บิดงอ,เสียรูป":
             vol_name = "DA"
             eq_name = "PO"
             subeq_name = "0A"
