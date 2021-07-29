@@ -122,27 +122,30 @@ def aidea(request): #หน้า aidea.html
 
                 if  eq_name == "CT/VT":
                     eq_name = "CV"
-                
-                
+            
+                print("-----------------------")
+                print(vol_name)
+                print(eq_name)
+                print(subeq_name)
+                print("-----------------------")
                 # ชนิดอุปกรณ์
                     #ชุดแรงดันที่ รหัสไม่ตรงกัน
-                if  vol_name == "DA" and eq_name == "จุดต่อในระบบจำหน่าย" and subeq_name == "t-clamp (แคล้มป์มือเสือ)":
-                    subeq_name = "3A"
-                    eq_name = "JO"
-
-                if  vol_name == "33KV" and subeq_name == "t-clamp (แคล้มป์มือเสือ)":
+                if  vol_name == "DA" and eq_name == "JO" and subeq_name == "t-clamp (แคล้มป์มือเสือ)":
                     subeq_name = "3A"
 
-                if  vol_name == "115KV" and subeq_name == "t-clamp (แคล้มป์มือเสือ)":
+                if  vol_name == "DB" and eq_name == "JO" and subeq_name == "t-clamp (แคล้มป์มือเสือ)":
+                    subeq_name = "3A"
+
+                if  vol_name == "TA" and eq_name == "JO" and subeq_name == "t-clamp (แคล้มป์มือเสือ)":
                     subeq_name = "2A"
 
-                if  vol_name == "22KV" and subeq_name == "หางปลา":
+                if  vol_name == "DA" and eq_name == "JO" and subeq_name == "หางปลา":
                     subeq_name = "4A"
 
-                if  vol_name == "33KV" and subeq_name == "หางปลา ":
+                if  vol_name == "DB" and eq_name == "JO" and subeq_name == "หางปลา":
                     subeq_name = "4A"
 
-                if  vol_name == "115KV" and subeq_name == "หางปลา ":
+                if  vol_name == "TA" and eq_name == "JO" and subeq_name == "หางปลา":
                     subeq_name = "3A"
 
                     #ชุดแรงดันที่ รหัสตรงกัน
@@ -441,7 +444,7 @@ def aidea(request): #หน้า aidea.html
                     
                 img = Image(job_officerid=job_officerid, eq_name=eq_name, subeq_name=subeq_name, abnor_name=abnor_name, vol_name=vol_name, abnor_other=abnor_other, nameimageold=nameimageold, nameimagenew=nameimagenew, pathimage=pathimage, job_picture=job_picture, image = f_image)
                 img.save()
-                
+
                 #path_fileแบบไม่ต้องพิมเอง
                 path_file = os.path.join(os.getcwd(), "media", f_image.name)
                 print(path_file)
