@@ -40,7 +40,6 @@ def aidea(request): #หน้า aidea.html
         # ประเภทอุปกรณ์
         subeq_name = request.POST['topic']
         # สาเหตุการชำรุด
-        # abnor_name = request.POST['chapter[]']
         abnor_name = request.POST.getlist('chapter[]')
         abnor_other = request.POST['other']
         f_image = request.FILES['image']
