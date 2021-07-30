@@ -920,7 +920,7 @@ def aidea(request): #หน้า aidea.html
         abnor_name = request.POST.getlist('chapter2[]')
         abnor_other = request.POST['other2']
         f_image = request.FILES['image']
-        if  eq_name != "ประเภทอุปกรณ์":
+        if  subeq_name != "ชนิดอุปกรณ์":
            
             # abnor_name = ",".join(abnor_name)
             # print(abnor_name)
