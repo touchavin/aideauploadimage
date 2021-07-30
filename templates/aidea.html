@@ -162,29 +162,23 @@
                         <br>
                         <label for="title">อื่นๆ</label>
                         <input type="text" name="other" placeholder="อื่นๆ" />
-
                     </div>
 
-
-
                     <h3>อุปกรณ์ที่2</h3>
-                </div>
+                    <style>
+                        select {
+                            width: 100%;
+                        }
+                    </style>
 
-
-                <style>
-                    select {
-                        width: 100%;
-                    }
-                </style>
-
-                <div>
-                    <div class="form-group row">
-                        <label class="col-sm-2">
+                    <div>
+                        <div class="form-group row">
+                            <label class="col-sm-2">
                             ประเภทอุปกรณ์
                     </label>
 
-                        <div class="col-sm-10">
-                            <select name="subject2" id="subject2" placeholder="ประเภทอุปกรณ์">
+                            <div class="col-sm-10">
+                                <select name="subject2" id="subject2" placeholder="ประเภทอุปกรณ์">
                         <option value="ประเภทอุปกรณ์">ประเภทอุปกรณ์</option>       
                         <option value="เสา">เสา</option>
                         <option value="จุดต่อในระบบจำหน่าย">จุดต่อในระบบจำหน่าย</option>
@@ -199,19 +193,19 @@
                         <option value="11">November</option>
                         <option value="12">December</option>
                       </select>
+                            </div>
                         </div>
-                    </div>
 
 
 
-                    <div>
-                        <div class="form-group row">
-                            <label class="col-sm-2">
+                        <div>
+                            <div class="form-group row">
+                                <label class="col-sm-2">
                                 ชนิดอุปกรณ์
                     </label>
 
-                            <div class="col-sm-10">
-                                <select name="topic2" id="topic2" placeholder="ชนิดอุปกรณ์">
+                                <div class="col-sm-10">
+                                    <select name="topic2" id="topic2" placeholder="ชนิดอุปกรณ์">
                         <option value="ชนิดอุปกรณ์">ชนิดอุปกรณ์</option>
                         <option value="เสาคอนกรีต">เสาคอนกรีต</option>
                         <option value="t-clamp (แคล้มป์มือเสือ)">t-clamp (แคล้มป์มือเสือ)</option>
@@ -226,17 +220,17 @@
                         <option value="11">November</option>
                         <option value="12">December</option>
                       </select>
+                                </div>
                             </div>
-                        </div>
 
 
-                        <div class="form-group row">
-                            <label class="col-sm-2">
+                            <div class="form-group row">
+                                <label class="col-sm-2">
                     สาเหตุการชำรุด
                     </label>
 
-                            <div class="col-sm-10">
-                                <select multiple="multiple" name="chapter2[]" id="chapter2" placeholder="สาเหตุการชำรุด">
+                                <div class="col-sm-10">
+                                    <select multiple="multiple" name="chapter2[]" id="chapter2" placeholder="สาเหตุการชำรุด">
                         <option value="สภาพปกติ">สภาพปกติ</option>
                         <option value="บิ่น,แตก">บิ่น,แตก</option>
                         <option value="ฉีกขาด">ฉีกขาด</option>
@@ -250,19 +244,112 @@
                         <option value="11">November</option>
                         <option value="12">December</option>
                       </select>
-                            </div>
-                        </div>
+                                    <div>
+                                        <br>
+                                        <label for="title">อื่นๆ</label>
+                                        <input type="text" name="other2" placeholder="อื่นๆ" />
+                                    </div>
 
 
-                        <script>
-                            $(function() {
-                                $('select').multipleSelect({
-                                    showClear: true
-                                })
-                            })
-                        </script>
+                                    <h3>อุปกรณ์ที่3</h3>
+                                    <style>
+                                        select {
+                                            width: 100%;
+                                        }
+                                    </style>
 
-                        <!-- 
+                                    <div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2">
+                                  ประเภทอุปกรณ์
+                          </label>
+
+                                            <div class="col-sm-10">
+                                                <select name="subject3" id="subject3" placeholder="ประเภทอุปกรณ์">
+                              <option value="ประเภทอุปกรณ์">ประเภทอุปกรณ์</option>       
+                              <option value="เสา">เสา</option>
+                              <option value="จุดต่อในระบบจำหน่าย">จุดต่อในระบบจำหน่าย</option>
+                              <option value="3">March</option>
+                              <option value="4">April</option>
+                              <option value="5">May</option>
+                              <option value="6">June</option>
+                              <option value="7">July</option>
+                              <option value="8">August</option>
+                              <option value="9">September</option>
+                              <option value="10">October</option>
+                              <option value="11">November</option>
+                              <option value="12">December</option>
+                            </select>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-2">
+                                      ชนิดอุปกรณ์
+                          </label>
+
+                                                <div class="col-sm-10">
+                                                    <select name="topic3" id="topic3" placeholder="ชนิดอุปกรณ์">
+                              <option value="ชนิดอุปกรณ์">ชนิดอุปกรณ์</option>
+                              <option value="เสาคอนกรีต">เสาคอนกรีต</option>
+                              <option value="t-clamp (แคล้มป์มือเสือ)">t-clamp (แคล้มป์มือเสือ)</option>
+                              <option value="หางปลา">หางปลา </option>
+                              <option value="4">April</option>
+                              <option value="5">May</option>
+                              <option value="6">June</option>
+                              <option value="7">July</option>
+                              <option value="8">August</option>
+                              <option value="9">September</option>
+                              <option value="10">October</option>
+                              <option value="11">November</option>
+                              <option value="12">December</option>
+                            </select>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group row">
+                                                <label class="col-sm-2">
+                          สาเหตุการชำรุด
+                          </label>
+
+                                                <div class="col-sm-10">
+                                                    <select multiple="multiple" name="chapter3[]" id="chapter3" placeholder="สาเหตุการชำรุด">
+                              <option value="สภาพปกติ">สภาพปกติ</option>
+                              <option value="บิ่น,แตก">บิ่น,แตก</option>
+                              <option value="ฉีกขาด">ฉีกขาด</option>
+                              <option value="บิดงอ,เสียรูป">บิดงอ,เสียรูป</option>
+                              <option value="อื่นๆ">อื่นๆ</option>
+                              <option value="6">June</option>
+                              <option value="7">July</option>
+                              <option value="8">August</option>
+                              <option value="9">September</option>
+                              <option value="10">October</option>
+                              <option value="11">November</option>
+                              <option value="12">December</option>
+                            </select>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <br>
+                                                <label for="title">อื่นๆ</label>
+                                                <input type="text" name="other3" placeholder="อื่นๆ" />
+
+                                            </div>
+
+
+                                            <script>
+                                                $(function() {
+                                                    $('select').multipleSelect({
+                                                        showClear: true
+                                                    })
+                                                })
+                                            </script>
+
+                                            <!-- 
                 <select name="subject" id="subject">
                     ประเภทอุปกรณ์<option value=" ">ประเภทอุปกรณ์</option>
                                 
@@ -278,15 +365,9 @@
                               </select>
             </div> -->
 
-                        <div>
-                            <br>
-                            <label for="title">อื่นๆ</label>
-                            <input type="text" name="other2" placeholder="อื่นๆ" />
-
-                        </div>
 
 
-                        <!-- 
+                                            <!-- 
 
 
             <h6>อุปกรณ์ที่2</h6>
@@ -305,14 +386,14 @@
 
 
 
-                        <br>
-                        <br>
-                        <input type="submit" id="btn_submit" value="อัพโหลดไฟล์รูปภาพ" onclick="getValue()" disabled>
-                    </div>
-                </div>
-            </div>
-            </form>
-            </form>
+                                            <br>
+                                            <br>
+                                            <input type="submit" id="btn_submit" value="อัพโหลดไฟล์รูปภาพ" onclick="getValue()" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                </form>
+                                </form>
     </form>
     <!-- Optional JavaScript; choose one of the two! -->
 
